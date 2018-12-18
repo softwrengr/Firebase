@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "530153162710",
+    "firebase_url": "https://appointment-scheduling-8f47d.firebaseio.com",
+    "project_id": "appointment-scheduling-8f47d",
+    "storage_bucket": "appointment-scheduling-8f47d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:530153162710:android:7ce50cbb9cb53881",
+        "android_client_info": {
+          "package_name": "com.techease.appointment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "530153162710-l4hd4vctsb3qbgfqsqhoh4so5fslpc7c.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.techease.appointment",
+            "certificate_hash": "8a49158720a2ebae8039b7b3d30cebe77f89f196"
+          }
+        },
+        {
+          "client_id": "530153162710-1h56nfhuce4arlmebqfn1k2sledt7av1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLHFz5vKrBuL5eb5igmU2vUsa54R8uDts"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "530153162710-1h56nfhuce4arlmebqfn1k2sledt7av1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
