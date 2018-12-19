@@ -57,22 +57,6 @@
                 android:layout_marginRight="30sp"
                 />
 
-            <!--<TextView-->
-                <!--android:id="@+id/tv_forgot_password"-->
-                <!--android:layout_width="wrap_content"-->
-                <!--android:layout_height="wrap_content"-->
-                <!--android:text="Forgot Password?"-->
-                <!--android:paddingTop="8sp"-->
-                <!--android:textColor="@color/white"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:layout_marginRight="30sp"/>-->
-            <!--<View-->
-                <!--android:layout_width="110sp"-->
-                <!--android:layout_height="1sp"-->
-                <!--android:layout_gravity="right"-->
-                <!--android:background="@color/white"-->
-                <!--android:layout_marginRight="30sp"/>-->
-
 
             <Button
                 android:id="@+id/btn_login"

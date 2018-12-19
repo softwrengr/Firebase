@@ -1,0 +1,64 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context="com.techease.appointment.fragments.customer.ShowRetailersFragment">
+
+
+    <TextView
+        android:id="@+id/retailer_one"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginLeft="10sp"
+        android:text="Retailer one"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/gradient_background"/>
+
+    <TextView
+        android:id="@+id/retailer_two"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_below="@id/retailer_one"
+        android:layout_marginTop="5sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginLeft="10sp"
+        android:text="Retailer two"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/gradient_background"/>
+
+
+    <TextView
+        android:id="@+id/retailer_three"
+        android:layout_width="match_parent"
+        android:layout_height="100sp"
+        android:layout_below="@id/retailer_two"
+        android:layout_marginTop="5sp"
+        android:layout_marginRight="10sp"
+        android:layout_marginLeft="10sp"
+        android:text="Retailer three"
+        android:textSize="22sp"
+        android:textColor="@color/white"
+        android:gravity="center"
+        android:background="@drawable/gradient_background"/>
+
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/customer_navigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="?android:attr/windowBackground"
+        app:itemBackground="@color/bgBottomNavigation"
+        android:foreground="?attr/selectableItemBackground"
+        app:itemIconTint="@android:color/white"
+        app:itemTextColor="@android:color/white"
+        app:menu="@menu/navigation" />
+</RelativeLayout>

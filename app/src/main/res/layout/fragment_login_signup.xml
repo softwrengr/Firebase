@@ -1,0 +1,62 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/gradient_background"
+    tools:context="com.techease.appointment.fragments.LoginSignupFragment">
+
+
+    <!--<ImageView-->
+        <!--android:layout_width="150sp"-->
+        <!--android:layout_height="120sp"-->
+        <!--android:src="@drawable/logo"-->
+        <!--android:layout_centerHorizontal="true"-->
+        <!--android:layout_marginTop="30sp"/>-->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Welcome To"
+        android:layout_marginLeft="20sp"
+        android:textSize="20sp"
+        android:textColor="@color/white"
+        android:layout_above="@id/welcome"/>
+
+    <TextView
+        android:id="@+id/welcome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Appointment Schedule"
+        android:layout_marginLeft="20sp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:layout_marginBottom="10sp"
+        android:textColor="@color/white"
+        android:layout_above="@id/btn_go_login"/>
+
+
+    <Button
+        android:id="@+id/btn_go_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:text="Login"
+        android:background="@color/colorPrimaryDark"
+        android:textColor="@color/white"
+        android:layout_above="@id/btn_go_signup"
+        />
+
+    <Button
+        android:id="@+id/btn_go_signup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginTop="10sp"
+        android:layout_marginBottom="10sp"
+        android:textColor="@color/white"
+        android:text="signup"
+        android:background="@color/colorPrimaryDark"
+        android:layout_alignParentBottom="true" />
+</RelativeLayout>

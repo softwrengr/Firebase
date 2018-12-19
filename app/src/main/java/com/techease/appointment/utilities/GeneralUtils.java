@@ -21,6 +21,16 @@ public class GeneralUtils {
         return fragment;
     }
 
+    public static Fragment connectFrag(Context context,Fragment fragment){
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.sub_container,fragment).commit();
+        return fragment;
+    }
+
+    public static Fragment connectFragmentWithBack(Context context,Fragment fragment){
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
+        return fragment;
+    }
+
     public static SharedPreferences.Editor putStringValueInEditor(Context context, String key, String value) {
         sharedPreferences = getSharedPreferences(context);
         editor = sharedPreferences.edit();

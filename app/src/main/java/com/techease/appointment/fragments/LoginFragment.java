@@ -1,10 +1,9 @@
 package com.techease.appointment.fragments;
 
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +17,9 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.techease.appointment.R;
+import com.techease.appointment.actvities.MainActivity;
+import com.techease.appointment.fragments.customer.ShowRetailersFragment;
+import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import butterknife.BindView;
@@ -25,6 +27,7 @@ import butterknife.ButterKnife;
 
 
 public class LoginFragment extends Fragment {
+    AlertDialog alertDialog;
     @BindView(R.id.btn_login)
     Button btnLogin;
     @BindView(R.id.tv_new_user)
@@ -35,14 +38,19 @@ public class LoginFragment extends Fragment {
     EditText etPassword;
     View view;
     private FirebaseAuth auth;
-    String  strEmail, strPassword;
+    String  strEmail, strPassword,strUserType;
     private boolean valid = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
+        ((MainActivity)getActivity()).getSupportActionBar().hide();
         auth = FirebaseAuth.getInstance();
+
+        Bundle bundle = this.getArguments();
+        strUserType = bundle.getString("type");
+        Toast.makeText(getActivity(), strUserType, Toast.LENGTH_SHORT).show();
         initUI();
         return view;
     }
@@ -53,6 +61,8 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if (validate()) {
+                    alertDialog = AlertUtils.createProgressDialog(getActivity());
+                    alertDialog.show();
                     customerLogin();
                 }
             }
@@ -75,7 +85,14 @@ public class LoginFragment extends Fragment {
                   Toast.makeText(getActivity(), "your email or password is incorrect", Toast.LENGTH_SHORT).show();
               }
               else {
-                  GeneralUtils.connectFragment(getActivity(),new HomeFragment());
+                  alertDialog.dismiss();
+                  if(strUserType.equals("customer")){
+                      GeneralUtils.connectFragment(getActivity(),new ShowRetailersFragment());
+                  }
+                  else {
+                      GeneralUtils.connectFragment(getActivity(),new HomeFragment());
+                  }
+
               }
           }
       });

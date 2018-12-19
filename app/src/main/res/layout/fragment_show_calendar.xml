@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    tools:context="com.techease.appointment.fragments.customer.ShowCalendarFragment">
+
+    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+        android:id="@+id/show_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:disable_date_color="#ABABAB"
+        custom:header_bg="@color/colorPrimary"
+        custom:range_color="@color/colorPrimary"
+        custom:selected_date_circle_color="@color/selected_date_circle_color"
+        custom:title_color="@color/white">
+    </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
+
+
+</RelativeLayout>

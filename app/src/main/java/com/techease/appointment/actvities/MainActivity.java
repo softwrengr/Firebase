@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.techease.appointment.R;
 import com.techease.appointment.fragments.LoginFragment;
+import com.techease.appointment.fragments.LoginSignupFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +15,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        GeneralUtils.connectFragment(this,new LoginFragment());
+        GeneralUtils.connectFragment(this,new LoginSignupFragment());
     }
 }

@@ -9,14 +9,18 @@ public class Users {
     public String name;
     public String email;
     public String phone;
+    public String address;
+    public String company;
+    public String unit;
 
-
-    public Users(String name, String email,String phone) {
+    public Users(String name, String email, String phone, String address, String company, String unit) {
         this.name = name;
         this.email = email;
         this.phone = phone;
+        this.address = address;
+        this.company = company;
+        this.unit = unit;
     }
-
 
     public String getName() {
         return name;
@@ -40,5 +44,29 @@ public class Users {
 
     public void setPhone(String phone) {
         this.phone = phone;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public String getCompany() {
+        return company;
+    }
+
+    public void setCompany(String company) {
+        this.company = company;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

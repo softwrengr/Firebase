@@ -28,35 +28,7 @@
                    android:textSize="22sp"
                    android:layout_gravity="center"/>
 
-                <EditText
-                    android:id="@+id/et_User_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="50sp"
-                    android:layout_marginLeft="30sp"
-                    android:hint="Name"
-                    android:imeOptions="actionNext"
-                    android:inputType="text"
-                    android:backgroundTint="@color/white"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="30sp"
-                    android:layout_marginTop="20sp"
-                    />
 
-                <EditText
-                    android:id="@+id/et_UserPhone"
-                    android:layout_width="match_parent"
-                    android:layout_height="50sp"
-                    android:layout_marginLeft="30sp"
-                    android:hint="Phone"
-                    android:imeOptions="actionNext"
-                    android:backgroundTint="@color/white"
-                    android:inputType="phone"
-                    android:textColorHint="@color/white"
-                    android:textColor="@color/white"
-                    android:layout_marginRight="30sp"
-                    android:layout_marginTop="20sp"
-                    />
 
                 <EditText
                     android:id="@+id/et_userEmail"

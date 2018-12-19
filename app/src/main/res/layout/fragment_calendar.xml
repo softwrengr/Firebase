@@ -1,0 +1,35 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    tools:context="com.techease.appointment.fragments.retailers.SetCalendarFragment">
+
+
+    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
+        android:id="@+id/set_calendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        custom:disable_date_color="#ABABAB"
+        custom:header_bg="@color/colorPrimary"
+        custom:range_color="@color/colorPrimary"
+        custom:selected_date_circle_color="@color/selected_date_circle_color"
+        custom:title_color="@color/white">
+    </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
+
+
+
+    <Button
+        android:id="@+id/btnSaveDate"
+        android:layout_width="200sp"
+        android:layout_height="40sp"
+        android:layout_marginTop="20sp"
+        android:background="@color/colorPrimary"
+        android:text="Set your Schedule"
+        android:layout_below="@id/set_calendar"
+        android:textAllCaps="false"
+        android:layout_centerInParent="true"
+        android:textColor="@color/white"
+        android:layout_gravity="center"
+        android:layout_marginBottom="20sp"/>
+</RelativeLayout>
