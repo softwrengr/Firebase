@@ -43,6 +43,8 @@ public class MakeAppointmentFragment extends Fragment {
     EditText etPhone;
     @BindView(R.id.address)
     EditText etAddress;
+    @BindView(R.id.date)
+    EditText etDate;
     @BindView(R.id.tv_select_unit)
     TextView tvSelectUnit;
     @BindView(R.id.btn_make_appointment)
@@ -52,19 +54,26 @@ public class MakeAppointmentFragment extends Fragment {
 
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth auth;
-    private DatabaseReference mDatabase;
+    private DatabaseReference mDatabase,databaseReference;
 
-    private String strFirstName, strLastName,strEmail, strChildNode,strCompanyName,strAddress,strPhone,strUnit="";
+    private String strFirstName, strLastName,strEmail, strChildNode,strCompanyName,strAddress,strPhone,strDate,strUnit="";
     private boolean valid = false;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_make_appointment, container, false);
+        getActivity().setTitle("Book your appointment");
         strEmail = GeneralUtils.getEmail(getActivity());
         String[] splitStr = strEmail.split("@");
         strChildNode = splitStr[0];
+
         initUI();
+
+        Bundle bundle = this.getArguments();
+        strDate = bundle.getString("selected_date");
+        etDate.setText(strDate);
+
         return view;
     }
 
@@ -82,7 +91,7 @@ public class MakeAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(validate()){
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("users").child(strChildNode);
+                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(strChildNode);
                     mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_data").child(strChildNode);
 
                     Map<String,String> map = new HashMap<>();
@@ -91,12 +100,14 @@ public class MakeAppointmentFragment extends Fragment {
                     map.put("company",strCompanyName);
                     map.put("phone",strPhone);
                     map.put("address",strEmail);
+                    map.put("date",strDate);
                     map.put("unit",strUnit);
-                    mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+
+                    databaseReference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
-                                Toast.makeText(getActivity(), "successfully make appointment", Toast.LENGTH_SHORT).show();
+                                Toast.makeText(getActivity(), "created", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });
@@ -106,6 +117,7 @@ public class MakeAppointmentFragment extends Fragment {
                         public void onComplete(@NonNull Task<Void> task) {
                             if(task.isSuccessful()){
                                 Log.d("success","data inserted successfully");
+                                Toast.makeText(getActivity(), "data inserted successfully", Toast.LENGTH_SHORT).show();
                             }
                         }
                     });

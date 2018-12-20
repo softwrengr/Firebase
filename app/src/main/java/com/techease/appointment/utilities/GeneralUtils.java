@@ -22,7 +22,12 @@ public class GeneralUtils {
     }
 
     public static Fragment connectFrag(Context context,Fragment fragment){
-        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.sub_container,fragment).commit();
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.retailer_container,fragment).addToBackStack("").commit();
+        return fragment;
+    }
+
+    public static Fragment connectCustomerFragment(Context context,Fragment fragment){
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.customer_fragment_container,fragment).addToBackStack("").commit();
         return fragment;
     }
 
@@ -40,6 +45,10 @@ public class GeneralUtils {
 
     public static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences("appoint", 0);
+    }
+
+    public static String getUserType(Context context) {
+        return getSharedPreferences(context).getString("type","");
     }
 
     public static String getEmail(Context context){

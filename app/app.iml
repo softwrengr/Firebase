@@ -186,6 +186,7 @@
     <orderEntry type="library" name="com.google.android.gms:play-services-base-16.0.1" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-28.0.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-impl-16.2.2" level="project" />
+    <orderEntry type="library" name="com.github.applikeysolutions:cosmocalendar-1.0.4" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-database-collection-16.0.1" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-measurement-base-16.0.3" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-17.0.3" level="project" />

@@ -1,10 +1,8 @@
-package com.techease.appointment.fragments;
+package com.techease.appointment.fragments.loginSignupFragments;
 
-import android.app.ActionBar;
 import android.app.Dialog;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,9 +51,7 @@ public class LoginSignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new LoginFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("type", "retailer");
-                fragment.setArguments(bundle);
+                GeneralUtils.putStringValueInEditor(getActivity(),"type","retailer");
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
                 dialog.dismiss();
             }
@@ -65,9 +61,7 @@ public class LoginSignupFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 Fragment fragment = new LoginFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("type", "customer");
-                fragment.setArguments(bundle);
+                GeneralUtils.putStringValueInEditor(getActivity(),"type","customer");
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
                 dialog.dismiss();
             }

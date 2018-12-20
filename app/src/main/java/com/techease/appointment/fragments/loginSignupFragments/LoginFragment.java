@@ -1,4 +1,4 @@
-package com.techease.appointment.fragments;
+package com.techease.appointment.fragments.loginSignupFragments;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -18,7 +18,8 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.techease.appointment.R;
 import com.techease.appointment.actvities.MainActivity;
-import com.techease.appointment.fragments.customer.ShowRetailersFragment;
+import com.techease.appointment.fragments.customer.CustomerHomeFragment;
+import com.techease.appointment.fragments.retailers.RetailerHomeFragment;
 import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
 
@@ -48,8 +49,7 @@ public class LoginFragment extends Fragment {
         ((MainActivity)getActivity()).getSupportActionBar().hide();
         auth = FirebaseAuth.getInstance();
 
-        Bundle bundle = this.getArguments();
-        strUserType = bundle.getString("type");
+        strUserType = GeneralUtils.getUserType(getActivity());
         Toast.makeText(getActivity(), strUserType, Toast.LENGTH_SHORT).show();
         initUI();
         return view;
@@ -82,15 +82,16 @@ public class LoginFragment extends Fragment {
           @Override
           public void onComplete(@NonNull Task<AuthResult> task) {
               if(!task.isSuccessful()){
+                  alertDialog.dismiss();
                   Toast.makeText(getActivity(), "your email or password is incorrect", Toast.LENGTH_SHORT).show();
               }
               else {
                   alertDialog.dismiss();
                   if(strUserType.equals("customer")){
-                      GeneralUtils.connectFragment(getActivity(),new ShowRetailersFragment());
+                      GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
                   }
                   else {
-                      GeneralUtils.connectFragment(getActivity(),new HomeFragment());
+                      GeneralUtils.connectFragment(getActivity(),new RetailerHomeFragment());
                   }
 
               }

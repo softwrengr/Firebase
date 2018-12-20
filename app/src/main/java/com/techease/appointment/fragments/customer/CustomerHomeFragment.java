@@ -1,4 +1,4 @@
-package com.techease.appointment.fragments;
+package com.techease.appointment.fragments.customer;
 
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -11,26 +11,25 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.techease.appointment.R;
-import com.techease.appointment.fragments.retailers.SeeApointmentFragment;
-import com.techease.appointment.fragments.retailers.SetCalendarFragment;
+import com.techease.appointment.actvities.MainActivity;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-
-public class HomeFragment extends Fragment {
-   View  view;
-   @BindView(R.id.navigation)
-   BottomNavigationView bottomNavigationView;
+public class CustomerHomeFragment extends Fragment {
+    View view;
+    @BindView(R.id.customer_navigation)
+    BottomNavigationView bottomNavigationView;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_home, container, false);
-        GeneralUtils.connectFrag(getActivity(),new SetCalendarFragment());
+        view  = inflater.inflate(R.layout.fragment_customer_home, container, false);
+        ((MainActivity)getActivity()).getSupportActionBar().show();
         initUI();
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
         return view;
     }
 
@@ -39,17 +38,19 @@ public class HomeFragment extends Fragment {
 
     }
 
+
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    GeneralUtils.connectFrag(getActivity(),new SetCalendarFragment());
+                    GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
                     return true;
                 case R.id.navigation_schedule:
-                    GeneralUtils.connectFrag(getActivity(),new SeeApointmentFragment());
+                    GeneralUtils.connectCustomerFragment(getActivity(),new CustomerAppointmentFragment());
                     return true;
                 case R.id.navigation_profile:
                     Toast.makeText(getActivity(), "profile", Toast.LENGTH_SHORT).show();

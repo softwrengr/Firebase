@@ -1,8 +1,5 @@
-package com.techease.appointment.fragments;
+package com.techease.appointment.fragments.loginSignupFragments;
 
-import android.app.AlertDialog;
-import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -15,20 +12,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.techease.appointment.R;
 import com.techease.appointment.actvities.MainActivity;
-import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;

@@ -86,7 +86,7 @@ public class SetCalendarFragment extends Fragment {
     private void convertStartDateToString(Calendar sDate) {
 
         sDate.add(Calendar.DATE, 0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
         String formatted = format1.format(sDate.getTime());
         startDate = formatted;
         Toast.makeText(getActivity(), startDate, Toast.LENGTH_SHORT).show();
@@ -100,7 +100,7 @@ public class SetCalendarFragment extends Fragment {
 
     private void convertEndDateToString(Calendar eDate) {
         eDate.add(Calendar.DATE, 0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
         String formatted = format1.format(eDate.getTime());
         endDate = formatted;
         Toast.makeText(getActivity(), endDate, Toast.LENGTH_SHORT).show();

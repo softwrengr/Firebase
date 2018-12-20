@@ -22,7 +22,7 @@ import com.techease.appointment.utilities.GeneralUtils;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class CustomerFragment extends Fragment {
+public class CustomerAppointmentFragment extends Fragment {
     @BindView(R.id.customer_tv_name)
     TextView tvCustomerName;
     @BindView(R.id.customer_tv_address)

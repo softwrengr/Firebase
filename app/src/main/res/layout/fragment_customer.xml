@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     xmlns:card_view="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.techease.appointment.fragments.customer.CustomerFragment">
+    tools:context="com.techease.appointment.fragments.customer.CustomerAppointmentFragment">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"

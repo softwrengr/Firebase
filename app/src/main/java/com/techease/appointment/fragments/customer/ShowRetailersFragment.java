@@ -22,14 +22,14 @@ import com.techease.appointment.fragments.customer.ShowCalendarFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
 public class ShowRetailersFragment extends Fragment {
     View view;
-    @BindView(R.id.customer_navigation)
-    BottomNavigationView bottomNavigationView;
     @BindView(R.id.retailer_one)
     TextView tvRetailerOne;
     @BindView(R.id.retailer_two)
@@ -37,34 +37,34 @@ public class ShowRetailersFragment extends Fragment {
     @BindView(R.id.retailer_three)
     TextView tvRetailerThree;
 
-    Bundle bundle;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_show_retailers, container, false);
+        getActivity().setTitle("All Retailers");
         initUI();
-        bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         return view;
     }
 
     private void initUI(){
         ButterKnife.bind(this,view);
         showAllRetailers();
-        bundle = new Bundle();
+        final Bundle bundle = new Bundle();
 
         tvRetailerOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("name","abdullah");
-                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
+                Toast.makeText(getActivity(), tvRetailerOne.getText().toString(), Toast.LENGTH_SHORT).show();
+                bundle.putString("name",tvRetailerOne.getText().toString());
+                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment());
             }
         });
 
         tvRetailerTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("name","adam");
+                bundle.putString("name",tvRetailerTwo.getText().toString());
                 GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
             }
         });
@@ -72,7 +72,7 @@ public class ShowRetailersFragment extends Fragment {
         tvRetailerThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("name","kashif");
+                bundle.putString("name",tvRetailerThree.getText().toString());
                 GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
             }
         });
@@ -83,14 +83,18 @@ public class ShowRetailersFragment extends Fragment {
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                ArrayList<String> authors = new ArrayList<String>();
+
+                List<String> arrayList = new ArrayList<String>();
                 for(DataSnapshot ds : dataSnapshot.getChildren()) {
-                    String name = ds.getKey();
-                    authors.add(name);
-                    tvRetailerOne.setText(authors.get(0));
-//                    tvRetailerTwo.setText(authors.get(1));
-//                    tvRetailerThree.setText(authors.get(2));
+//                 arrayList.add(ds.getKey().toString());
+//                    Iterator<String> iterator = arrayList.iterator();
+//                    while (iterator.hasNext()) {
+//                        tvRetailerOne.setText(iterator.next());
+//                    }
+                    String[] array = new String[]{ds.getKey()};
+                    Toast.makeText(getActivity(), array[0], Toast.LENGTH_SHORT).show();
                 }
+
             }
 
             @Override
@@ -99,24 +103,4 @@ public class ShowRetailersFragment extends Fragment {
         ref.addListenerForSingleValueEvent(eventListener);
     }
 
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
-
-        @Override
-        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-            Fragment fragment;
-            switch (item.getItemId()) {
-                case R.id.navigation_home:
-                    Toast.makeText(getActivity(), "home", Toast.LENGTH_SHORT).show();
-                    return true;
-                case R.id.navigation_schedule:
-                    GeneralUtils.connectFragmentWithBack(getActivity(),new MakeAppointmentFragment());
-                    return true;
-                case R.id.navigation_profile:
-                    Toast.makeText(getActivity(), "profile", Toast.LENGTH_SHORT).show();
-                    return true;
-            }
-            return false;
-        }
-    };
 }
