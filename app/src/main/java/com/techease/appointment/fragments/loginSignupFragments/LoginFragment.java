@@ -46,7 +46,6 @@ public class LoginFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_login, container, false);
-        ((MainActivity)getActivity()).getSupportActionBar().hide();
         auth = FirebaseAuth.getInstance();
 
         strUserType = GeneralUtils.getUserType(getActivity());

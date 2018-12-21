@@ -60,4 +60,5 @@ public class RetailerHomeFragment extends Fragment {
             return false;
         }
     };
+
 }

@@ -55,9 +55,8 @@ public class ShowRetailersFragment extends Fragment {
         tvRetailerOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(getActivity(), tvRetailerOne.getText().toString(), Toast.LENGTH_SHORT).show();
                 bundle.putString("name",tvRetailerOne.getText().toString());
-                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment());
+                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
             }
         });
 
@@ -92,7 +91,6 @@ public class ShowRetailersFragment extends Fragment {
 //                        tvRetailerOne.setText(iterator.next());
 //                    }
                     String[] array = new String[]{ds.getKey()};
-                    Toast.makeText(getActivity(), array[0], Toast.LENGTH_SHORT).show();
                 }
 
             }

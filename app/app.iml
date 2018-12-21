@@ -153,6 +153,7 @@
     <orderEntry type="library" name="com.android.support:print-28.0.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-measurement-connector-17.0.1" level="project" />
     <orderEntry type="library" scope="TEST" name="net.sf.kxml:kxml2:2.3.0@jar" level="project" />
+    <orderEntry type="library" name="joda-time:joda-time:2.10@jar" level="project" />
     <orderEntry type="library" name="com.android.support:support-compat-28.0.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-interop-16.0.1" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-measurement-connector-impl-17.0.2" level="project" />
@@ -186,7 +187,6 @@
     <orderEntry type="library" name="com.google.android.gms:play-services-base-16.0.1" level="project" />
     <orderEntry type="library" name="com.android.support:appcompat-v7-28.0.0" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-analytics-impl-16.2.2" level="project" />
-    <orderEntry type="library" name="com.github.applikeysolutions:cosmocalendar-1.0.4" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-database-collection-16.0.1" level="project" />
     <orderEntry type="library" name="com.google.android.gms:play-services-measurement-base-16.0.3" level="project" />
     <orderEntry type="library" name="com.google.firebase:firebase-iid-17.0.3" level="project" />

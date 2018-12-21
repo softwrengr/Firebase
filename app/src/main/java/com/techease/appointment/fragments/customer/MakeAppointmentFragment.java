@@ -5,6 +5,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
@@ -63,6 +65,7 @@ public class MakeAppointmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_make_appointment, container, false);
+        customActionBar();
         getActivity().setTitle("Book your appointment");
         strEmail = GeneralUtils.getEmail(getActivity());
         String[] splitStr = strEmail.split("@");
@@ -204,5 +207,28 @@ public class MakeAppointmentFragment extends Fragment {
         });
 
         popup.show();
+    }
+
+    public void customActionBar() {
+        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        ImageView ivBack = mCustomView.findViewById(R.id.ivBack);
+        TextView tvTitle = mCustomView.findViewById(R.id.title);
+        tvTitle.setText("Make Appointment");
+        ivBack.setVisibility(View.VISIBLE);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneralUtils.connectFragment(getActivity(),new ShowCalendarFragment());
+            }
+        });
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+        mActionBar.show();
+
     }
 }

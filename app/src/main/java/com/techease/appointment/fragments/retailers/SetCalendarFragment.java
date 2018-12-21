@@ -6,10 +6,13 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
@@ -48,6 +51,7 @@ public class SetCalendarFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_calendar, container, false);
+        customActionBar();
         initUI();
         return view;
     }
@@ -86,7 +90,7 @@ public class SetCalendarFragment extends Fragment {
     private void convertStartDateToString(Calendar sDate) {
 
         sDate.add(Calendar.DATE, 0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(sDate.getTime());
         startDate = formatted;
         Toast.makeText(getActivity(), startDate, Toast.LENGTH_SHORT).show();
@@ -100,7 +104,7 @@ public class SetCalendarFragment extends Fragment {
 
     private void convertEndDateToString(Calendar eDate) {
         eDate.add(Calendar.DATE, 0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy/MM/dd");
+        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(eDate.getTime());
         endDate = formatted;
         Toast.makeText(getActivity(), endDate, Toast.LENGTH_SHORT).show();
@@ -127,6 +131,22 @@ public class SetCalendarFragment extends Fragment {
                 }
             }
         });
+    }
+
+    public void customActionBar() {
+        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        ImageView ivBack = mCustomView.findViewById(R.id.ivBack);
+        TextView tvTitle = mCustomView.findViewById(R.id.title);
+        tvTitle.setText("Set your availabilty");
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+        mActionBar.show();
+
     }
 
 }

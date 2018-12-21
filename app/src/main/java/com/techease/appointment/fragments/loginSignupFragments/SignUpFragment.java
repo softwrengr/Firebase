@@ -48,7 +48,6 @@ public class SignUpFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_sign_up, container, false);
-        ((MainActivity)getActivity()).getSupportActionBar().hide();
         initUI();
         return view;
     }
