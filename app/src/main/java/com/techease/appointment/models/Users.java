@@ -10,14 +10,16 @@ public class Users {
     public String email;
     public String phone;
     public String address;
+    public String date;
     public String company;
     public String unit;
 
-    public Users(String name, String email, String phone, String address, String company, String unit) {
+    public Users(String name, String email,String date, String phone, String address, String company, String unit) {
         this.name = name;
         this.email = email;
         this.phone = phone;
         this.address = address;
+        this.date = date;
         this.company = company;
         this.unit = unit;
     }
@@ -68,5 +70,13 @@ public class Users {
 
     public void setUnit(String unit) {
         this.unit = unit;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 }

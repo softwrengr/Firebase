@@ -6,12 +6,7 @@
     tools:context="com.techease.appointment.fragments.loginSignupFragments.LoginSignupFragment">
 
 
-    <!--<ImageView-->
-        <!--android:layout_width="150sp"-->
-        <!--android:layout_height="120sp"-->
-        <!--android:src="@drawable/logo"-->
-        <!--android:layout_centerHorizontal="true"-->
-        <!--android:layout_marginTop="30sp"/>-->
+
 
     <TextView
         android:layout_width="wrap_content"

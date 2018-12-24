@@ -18,6 +18,7 @@
         custom:title_color="@color/white">
     </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
 
+
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="20sp"

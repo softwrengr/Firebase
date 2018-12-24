@@ -51,6 +51,10 @@ public class GeneralUtils {
         return getSharedPreferences(context).getString("type","");
     }
 
+    public static String getDate(Context context) {
+        return getSharedPreferences(context).getString("date","");
+    }
+
     public static String getEmail(Context context){
         return getSharedPreferences(context).getString("email","");
     }

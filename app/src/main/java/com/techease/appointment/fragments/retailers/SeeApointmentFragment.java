@@ -1,6 +1,8 @@
 package com.techease.appointment.fragments.retailers;
 
+import android.app.Activity;
 import android.content.Context;
+import android.database.sqlite.SQLiteDatabase;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -25,6 +27,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
+import com.techease.appointment.helpers.AppointCrud;
 import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
@@ -41,7 +44,8 @@ public class SeeApointmentFragment extends Fragment {
     DatabaseReference databaseReference;
     private String strEmail, strChildNode;
     private FirebaseRecyclerAdapter adapter;
-
+    Context context;
+    AppointCrud appointCrud;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -74,12 +78,18 @@ public class SeeApointmentFragment extends Fragment {
                             @NonNull
                             @Override
                             public Users parseSnapshot(@NonNull DataSnapshot snapshot) {
+
+                                appointCrud  = new AppointCrud(getActivity());
+                                appointCrud.insertData(snapshot.child("date").getValue().toString());
+
                                 return new Users(snapshot.child("address").getValue().toString(),
                                         snapshot.child("company").getValue().toString(),
+                                        snapshot.child("date").getValue().toString(),
                                         snapshot.child("first name").getValue().toString(),
                                         snapshot.child("last name").getValue().toString(),
                                         snapshot.child("phone").getValue().toString(),
                                         snapshot.child("unit").getValue().toString());
+
                             }
                         })
                         .build();
@@ -87,7 +97,7 @@ public class SeeApointmentFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull UsersViewHolder holder, int position, @NonNull Users model) {
-                holder.setName(model.getName(),model.getCompany(),model.getAddress(),model.getPhone(),model.getUnit());
+                holder.setName(getActivity(),model.getName(),model.getCompany(),model.getDate(),model.getAddress(),model.getPhone(),model.getUnit());
 
 
             }
@@ -113,26 +123,28 @@ public class SeeApointmentFragment extends Fragment {
 
     public static class UsersViewHolder extends RecyclerView.ViewHolder {
         View mView;
-        Context context;
 
         public UsersViewHolder(View itemView) {
             super(itemView);
             mView = itemView;
         }
 
-        public void  setName(String modelName, String company, String address, String phone, String unit){
+        public void  setName(Activity activity,String modelName, String company, String date, String address, String phone, String unit){
             TextView tvCompany = mView.findViewById(R.id.tv_company_name);
             TextView tvName = mView.findViewById(R.id.tv_name);
             TextView tvAddress = mView.findViewById(R.id.tv_address);
+            TextView tvDate = mView.findViewById(R.id.tv_date);
             TextView tvPhone = mView.findViewById(R.id.tv_phone_no);
             TextView tvUnit = mView.findViewById(R.id.tv_unit);
 
             tvName.setText(modelName);
             tvCompany.setText(company);
+            tvDate.setText(date);
             tvAddress.setText(address);
             tvPhone.setText(phone);
             tvUnit.setText(unit);
 
+            dateForNotification(activity,date);
 
         }
     }
@@ -147,6 +159,11 @@ public class SeeApointmentFragment extends Fragment {
     public void onStop() {
         super.onStop();
         adapter.stopListening();
+    }
+
+    public static void dateForNotification(Activity activity,String date){
+
+       GeneralUtils.putStringValueInEditor(activity,"date",date);
     }
 }
 

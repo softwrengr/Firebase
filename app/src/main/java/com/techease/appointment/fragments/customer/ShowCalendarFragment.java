@@ -49,7 +49,6 @@ public class ShowCalendarFragment extends Fragment {
     @BindView(R.id.tvRetailerDays)
     TextView tvRetailerDays;
 
-
     View view;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
@@ -187,7 +186,6 @@ public class ShowCalendarFragment extends Fragment {
 
         Log.d("start",startSelectionDate.toString());
         calendarView.setSelectedDateRange(startSelectionDate, endSelectionDate);
-
 
     }
 
