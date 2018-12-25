@@ -3,7 +3,7 @@
 
 
     <corners
-        android:radius="10dp"
+        android:radius="5dp"
         />
 
     <solid

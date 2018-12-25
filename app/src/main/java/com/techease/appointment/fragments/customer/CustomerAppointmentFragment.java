@@ -4,10 +4,12 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,16 +35,20 @@ public class CustomerAppointmentFragment extends Fragment {
     TextView tvCustomerPhoneNo;
     @BindView(R.id.customer_tv_unit)
     TextView tvCustomerUnit;
+    @BindView(R.id.customer_tv_date)
+    TextView tvCustomerDate;
 
     View view;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private String strEmail, strChildNode;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_customer, container, false);
+        customActionBar();
         strEmail = GeneralUtils.getEmail(getActivity());
         String[] splitStr = strEmail.split("@");
         strChildNode = splitStr[0];
@@ -50,12 +56,11 @@ public class CustomerAppointmentFragment extends Fragment {
         return view;
     }
 
-    private void initUI(){
-        ButterKnife.bind(this,view);
+    private void initUI() {
+        ButterKnife.bind(this, view);
         firebaseDatabase = FirebaseDatabase.getInstance();
         showCustomerData();
     }
-
 
 
     private void showCustomerData() {
@@ -64,30 +69,53 @@ public class CustomerAppointmentFragment extends Fragment {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                if(!dataSnapshot.exists()){
+                if (!dataSnapshot.exists()) {
                     Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                }
-                else {
+                } else {
                     String first_name = dataSnapshot.child("first name").getValue().toString();
                     String last_name = dataSnapshot.child("last name").getValue().toString();
                     String phone = dataSnapshot.child("phone").getValue().toString();
                     String address = dataSnapshot.child("address").getValue().toString();
                     String companyName = dataSnapshot.child("company").getValue().toString();
+                    String date = dataSnapshot.child("date").getValue().toString();
                     String unit = dataSnapshot.child("unit").getValue().toString();
 
-                    tvCustomerName.setText(first_name+" "+last_name);
+                    tvCustomerName.setText(first_name + " " + last_name);
                     tvCustomerPhoneNo.setText(phone);
                     tvCustomerCompanyName.setText(companyName);
                     tvCustomerUnit.setText(unit);
                     tvCustomerAddress.setText(address);
+                    tvCustomerDate.setText(date);
                 }
 
             }
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Log.d("error",error.getMessage());
+                Log.d("error", error.getMessage());
             }
         });
+    }
+
+    public void customActionBar() {
+        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
+        mActionBar.setDisplayShowHomeEnabled(false);
+        mActionBar.setDisplayShowTitleEnabled(false);
+        mActionBar.setDisplayHomeAsUpEnabled(false);
+        LayoutInflater mInflater = LayoutInflater.from(getActivity());
+        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
+        ImageView ivBack = mCustomView.findViewById(R.id.ivBack);
+        TextView tvTitle = mCustomView.findViewById(R.id.title);
+        tvTitle.setText("My Appointment");
+        ivBack.setVisibility(View.VISIBLE);
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
+            }
+        });
+        mActionBar.setCustomView(mCustomView);
+        mActionBar.setDisplayShowCustomEnabled(true);
+        mActionBar.show();
     }
 }

@@ -21,9 +21,12 @@ import android.widget.ProgressBar;
 
 import com.techease.appointment.R;
 import com.techease.appointment.actvities.MainActivity;
+import com.techease.appointment.services.NotificationServices;
 
 
 public class AlertUtils {
+
+
 
     public static AlertDialog createProgressDialog(Activity activity) {
 
@@ -61,6 +64,7 @@ public class AlertUtils {
         /**Creates an explicit intent for an Activity in your app**/
         Intent resultIntent = new Intent(context, MainActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        NotificationServices.check=true;
 
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

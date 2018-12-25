@@ -46,8 +46,9 @@ dependencies {
     //calendar
     implementation 'com.archit.calendar:awesome-calendar:1.1.4'
     implementation 'joda-time:joda-time:2.10'
-    implementation 'com.squareup:android-times-square:1.6.5@aar'
+    implementation 'com.savvi.datepicker:rangepicker:1.2.0'
 }
+
 
 
 

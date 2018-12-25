@@ -7,56 +7,59 @@
     tools:context="com.techease.appointment.fragments.customer.ShowCalendarFragment">
 
 
-    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
-        android:id="@+id/show_calendar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        custom:disable_date_color="#ABABAB"
-        custom:header_bg="@color/colorPrimary"
-        custom:range_color="@color/colorPrimary"
-        custom:selected_date_circle_color="@color/selected_date_circle_color"
-        custom:title_color="@color/white">
-    </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
+    <com.savvi.rangedatepicker.CalendarPickerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/calendar_picker"
+        android:layout_width="match_parent"
+        android:layout_height="350sp"
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:clipToPadding="false"
+        app:tsquare_dividerColor="@color/colorPrimaryDark"
+        app:tsquare_headerTextColor="@color/colorAccent"
+        />
+
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="20sp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_marginLeft="20sp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvRetailerName"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Retailer Name "-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18sp"-->
+            <!--android:textStyle="bold"/>-->
+
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text=" is available on"-->
+            <!--android:textSize="15sp"/>-->
+
+    <!--</LinearLayout>-->
+    <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="20sp"-->
+        <!--android:orientation="horizontal"-->
+        <!--android:layout_marginLeft="20sp"-->
+        <!--android:layout_marginTop="10sp">-->
+
+        <!--<TextView-->
+            <!--android:id="@+id/tvRetailerDays"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="From"-->
+            <!--android:textColor="@color/black"-->
+            <!--android:textSize="18sp" />-->
 
 
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="20sp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20sp">
-
-        <TextView
-            android:id="@+id/tvRetailerName"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Retailer Name "
-            android:textColor="@color/black"
-            android:textSize="18sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" is available on"
-            android:textSize="15sp"/>
-
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="20sp"
-        android:orientation="horizontal"
-        android:layout_marginLeft="20sp"
-        android:layout_marginTop="10sp">
-
-        <TextView
-            android:id="@+id/tvRetailerDays"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="From"
-            android:textColor="@color/black"
-            android:textSize="18sp" />
-
-
-    </LinearLayout>
+    <!--</LinearLayout>-->
 
 </LinearLayout>

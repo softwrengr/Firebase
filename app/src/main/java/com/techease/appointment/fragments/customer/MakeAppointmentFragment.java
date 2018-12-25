@@ -27,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.techease.appointment.R;
 import com.techease.appointment.utilities.GeneralUtils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -54,12 +56,10 @@ public class MakeAppointmentFragment extends Fragment {
     @BindView(R.id.layout_select_unit)
     LinearLayout layoutSelectUnit;
 
-    FirebaseDatabase firebaseDatabase;
-    FirebaseAuth auth;
-    private DatabaseReference mDatabase,databaseReference;
-
+    private DatabaseReference database,mDatabase,databaseReference;
     private String strFirstName, strLastName,strEmail, strChildNode,strCompanyName,strAddress,strPhone,strDate,strUnit="";
     private boolean valid = false;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -106,6 +106,7 @@ public class MakeAppointmentFragment extends Fragment {
                     map.put("date",strDate);
                     map.put("unit",strUnit);
 
+
                     databaseReference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
@@ -121,6 +122,7 @@ public class MakeAppointmentFragment extends Fragment {
                             if(task.isSuccessful()){
                                 Log.d("success","data inserted successfully");
                                 Toast.makeText(getActivity(), "data inserted successfully", Toast.LENGTH_SHORT).show();
+                                GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
                             }
                         }
                     });
@@ -193,12 +195,10 @@ public class MakeAppointmentFragment extends Fragment {
                     case R.id.food_trucks:
                         strUnit = "Food Trucks";
                         tvSelectUnit.setText(strUnit);
-                        Toast.makeText(getActivity(), strUnit, Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.food_trailer:
                         strUnit = "Food Trailers";
                         tvSelectUnit.setText(strUnit);
-                        Toast.makeText(getActivity(), strUnit, Toast.LENGTH_SHORT).show();
                         break;
 
                 }
@@ -231,4 +231,5 @@ public class MakeAppointmentFragment extends Fragment {
         mActionBar.show();
 
     }
+
 }

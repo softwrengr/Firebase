@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.savvi.rangedatepicker.CalendarPickerView;
 import com.techease.appointment.R;
 import com.techease.appointment.utilities.GeneralUtils;
 
@@ -41,20 +42,13 @@ import butterknife.ButterKnife;
 
 
 public class ShowCalendarFragment extends Fragment {
-
-    @BindView(R.id.show_calendar)
-    DateRangeCalendarView calendarView;
-    @BindView(R.id.tvRetailerName)
-    TextView tvRetailerName;
-    @BindView(R.id.tvRetailerDays)
-    TextView tvRetailerDays;
+    @BindView(R.id.calendar_picker)
+    CalendarPickerView calendar;
 
     View view;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    private String strRetailerName, strFrom, strTo,strSelectDate;
-    int total;
-    SimpleDateFormat sdf;
+    private String strRetailerName, strFrom="", strTo="",strSelectDate,strCustomerName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -62,6 +56,10 @@ public class ShowCalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_show_calendar, container, false);
         customActionBar();
+        strCustomerName = GeneralUtils.getEmail(getActivity());
+        String[] splitStr = strCustomerName.split("@");
+        strCustomerName = splitStr[0];
+        Toast.makeText(getActivity(), strCustomerName, Toast.LENGTH_SHORT).show();
         initUI();
 
 
@@ -70,25 +68,25 @@ public class ShowCalendarFragment extends Fragment {
 
     private void initUI() {
         ButterKnife.bind(this, view);
+        firebaseDatabase = FirebaseDatabase.getInstance();
 
         Bundle bundle = this.getArguments();
         if(bundle!=null){
             strRetailerName = bundle.getString("name");
             Toast.makeText(getActivity(), strRetailerName, Toast.LENGTH_SHORT).show();
-            tvRetailerName.setText(strRetailerName);
         }
         else {
             strRetailerName="abdullah";
 
         }
 
-        firebaseDatabase = FirebaseDatabase.getInstance();
         showRetailerDate();
-        bookApppointment();
+        showCalendar(strFrom);
+
     }
 
     private void showRetailerDate() {
-        databaseReference = firebaseDatabase.getReference("available days").child(strRetailerName);
+        databaseReference = firebaseDatabase.getReference("users").child(strCustomerName);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -96,12 +94,10 @@ public class ShowCalendarFragment extends Fragment {
                 if (!dataSnapshot.exists()) {
                     Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
                 } else {
-                    strFrom = dataSnapshot.child("from").getValue().toString();
-                    strTo = dataSnapshot.child("to").getValue().toString();
-                    countTotalCost(strFrom,strTo);
-                    String habitnumber = strFrom + "<b>" + "    To    " + "</b> " + strTo;
-                    tvRetailerDays.setText(Html.fromHtml(habitnumber ));
+                    strFrom = dataSnapshot.child("date").getValue().toString();
+                   // strTo = dataSnapshot.child("to").getValue().toString();
 
+                    showCalendar(strFrom);
                 }
 
             }
@@ -118,75 +114,6 @@ public class ShowCalendarFragment extends Fragment {
     public void onResume() {
         super.onResume();
         initUI();
-    }
-
-    private void bookApppointment(){
-        calendarView.setCalendarListener(new DateRangeCalendarView.CalendarListener() {
-            @Override
-            public void onFirstDateSelected(Calendar date) {
-                convertStartDateToString(date);
-            }
-
-            @Override
-            public void onDateRangeSelected(Calendar startDate, Calendar endDate) {
-
-            }
-        });
-    }
-
-    private void convertStartDateToString(Calendar sDate) {
-
-        sDate.add(Calendar.DATE, 0);
-        sdf = new SimpleDateFormat("yyyy-MM-dd");
-        String formatted = sdf.format(sDate.getTime());
-        strSelectDate = formatted;
-        Bundle bundle = new Bundle();
-        bundle.putString("selected_date",strSelectDate);
-        GeneralUtils.connectFragmentWithBack(getActivity(),new MakeAppointmentFragment()).setArguments(bundle);
-        try {
-            System.out.println(sdf.parse(formatted));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-
-    public void countTotalCost(String startDate,String endDate) {
-
-        //don't change the time and date format
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-
-
-        try {
-            Date d1 = format.parse(startDate);
-            Date d2 = format.parse(endDate);
-
-
-            DateTime dt1 = new DateTime(d1);
-            DateTime dt2 = new DateTime(d2);
-
-            total = Days.daysBetween(dt1, dt2).getDays();
-            Toast.makeText(getActivity(), String.valueOf(total), Toast.LENGTH_SHORT).show();
-            retailerDate(dt1,total);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    private void retailerDate(DateTime initialDate,int days){
-        Log.d("show",String.valueOf(initialDate));
-
-        Calendar startSelectionDate = Calendar.getInstance();
-        startSelectionDate.add(Calendar.MONTH, -1);
-        Calendar endSelectionDate = (Calendar) startSelectionDate.clone();
-        endSelectionDate.add(Calendar.DATE, 30+days);
-
-        Log.d("start",startSelectionDate.toString());
-        calendarView.setSelectedDateRange(startSelectionDate, endSelectionDate);
-
     }
 
     public void customActionBar() {
@@ -210,5 +137,70 @@ public class ShowCalendarFragment extends Fragment {
         mActionBar.setDisplayShowCustomEnabled(true);
         mActionBar.show();
 
+    }
+
+
+    private void showCalendar(String a){
+
+        final Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
+
+        final Calendar lastYear = Calendar.getInstance();
+        lastYear.add(Calendar.YEAR, -1);
+
+
+        ArrayList<Date> arrayList = new ArrayList<>();
+        try {
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+            Date newdate = dateformat.parse(a);
+           // Date newdate2 = dateformat.parse(b);
+            arrayList.add(newdate);
+          //  arrayList.add(newdate2);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, YYYY", Locale.getDefault());
+
+        calendar.init(lastYear.getTime(), nextYear.getTime(), simpleDateFormat)
+                .withSelectedDate(new Date())
+                .withHighlightedDates(arrayList);
+
+
+    calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
+        @Override
+        public void onDateSelected(Date date) {
+            formatedDate(date);
+        }
+
+        @Override
+        public void onDateUnselected(Date date) {
+
+        }
+    });
+
+    }
+
+    private void formatedDate(Date date) {
+        String strDate = null;
+        SimpleDateFormat spf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        strDate = spf.format(date);
+        if (date==null){
+            Toast.makeText(getActivity(), "no date selected", Toast.LENGTH_SHORT).show();
+        }else {
+
+            java.util.Date newDate = null;
+            try {
+                newDate = spf.parse(strDate);
+                } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            strDate = sdf.format(newDate);
+
+            Bundle bundle = new Bundle();
+            bundle.putString("selected_date",strDate);
+            GeneralUtils.connectFragmentWithBack(getActivity(),new MakeAppointmentFragment()).setArguments(bundle);
+        }
     }
 }

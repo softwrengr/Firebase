@@ -17,6 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 public class NotificationServices extends Service {
     AppointCrud appointCrud;
+    public static boolean check = false;
 
     public NotificationServices() {
     }
@@ -33,27 +34,34 @@ public class NotificationServices extends Service {
 
         Toast.makeText(this, "services started", Toast.LENGTH_SHORT).show();
         appointCrud = new AppointCrud(getApplicationContext());
+
         final Handler handler = new Handler();
-        handler.postDelayed(new Runnable() {
+        final Runnable runnable = new Runnable() {
             @Override
             public void run() {
-
                 Date c = Calendar.getInstance().getTime();
-                SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-                String formattedDate = df.format(c);
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = sdf.format(c);
 
-                Toast.makeText(NotificationServices.this, formattedDate, Toast.LENGTH_SHORT).show();
+                SimpleDateFormat df = new SimpleDateFormat("HH-mm");
+                String currentTime = df.format(new Date());
 
-                if(appointCrud.checkItemChart(formattedDate)){
-                    Toast.makeText(NotificationServices.this, "matched", Toast.LENGTH_SHORT).show();
-                    AlertUtils.createNotification(getApplicationContext(),"appointment","check your today appointment",9);
+                if(!check){
+                    if (appointCrud.checkItemChart(formattedDate)) {
+
+                        Toast.makeText(NotificationServices.this, "matched", Toast.LENGTH_SHORT).show();
+                        AlertUtils.createNotification(getApplicationContext(), "appointment", "check your today appointment", 9);
+
+                    }
                 }
-                else {
-                    Toast.makeText(NotificationServices.this, "not matched", Toast.LENGTH_SHORT).show();
-                }
 
+                handler.postDelayed(this, 5000);
             }
-        },3000);
+
+        };
+        handler.postDelayed(runnable,1000);
+
+
 
         return super.onStartCommand(intent, flags, startId);
     }
