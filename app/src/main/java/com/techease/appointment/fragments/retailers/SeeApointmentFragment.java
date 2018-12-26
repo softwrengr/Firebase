@@ -45,7 +45,7 @@ public class SeeApointmentFragment extends Fragment {
     RecyclerView rvUserList;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    private String strEmail, strChildNode;
+    private String strEmail;
     private FirebaseRecyclerAdapter adapter;
     Context context;
     AppointCrud appointCrud;
@@ -55,9 +55,9 @@ public class SeeApointmentFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_see_apointment, container, false);
         customActionBar();
-        strEmail = GeneralUtils.getEmail(getActivity());
-        String[] splitStr = strEmail.split("@");
-        strChildNode = splitStr[0];
+//        strEmail = GeneralUtils.getEmail(getActivity());
+//        String[] splitStr = strEmail.split("@");
+//        strChildNode = splitStr[0];
         initUI();
         return view;
     }
@@ -89,8 +89,9 @@ public class SeeApointmentFragment extends Fragment {
                                 return new Users(snapshot.child("address").getValue().toString(),
                                         snapshot.child("company").getValue().toString(),
                                         snapshot.child("date").getValue().toString(),
-                                        snapshot.child("first name").getValue().toString(),
-                                        snapshot.child("last name").getValue().toString(),
+                                        snapshot.child("name").getValue().toString(),
+                                        snapshot.child("email").getValue().toString(),
+                                        snapshot.child("last_name").getValue().toString(),
                                         snapshot.child("phone").getValue().toString(),
                                         snapshot.child("unit").getValue().toString());
 

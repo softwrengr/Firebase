@@ -6,6 +6,7 @@
 
     <string name="home">Home</string>
     <string name="schedule">Schedule</string>
+    <string name="my_schedule">My Schedule</string>
     <string name="title_cart">Cart</string>
     <string name="profile">Profile</string>
 </resources>

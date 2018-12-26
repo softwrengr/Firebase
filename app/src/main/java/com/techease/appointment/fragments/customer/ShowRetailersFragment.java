@@ -1,5 +1,6 @@
 package com.techease.appointment.fragments.customer;
 
+import android.graphics.Typeface;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -52,27 +53,32 @@ public class ShowRetailersFragment extends Fragment {
         showAllRetailers();
         final Bundle bundle = new Bundle();
 
+        Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans_Regular.ttf");
+        tvRetailerOne.setTypeface(tf);
+        tvRetailerTwo.setTypeface(tf);
+        tvRetailerThree.setTypeface(tf);
+
         tvRetailerOne.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("name",tvRetailerOne.getText().toString());
-                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
+                GeneralUtils.putStringValueInEditor(getActivity(),"name",tvRetailerOne.getText().toString());
+                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment());
             }
         });
 
         tvRetailerTwo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("name",tvRetailerTwo.getText().toString());
-                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
+                GeneralUtils.putStringValueInEditor(getActivity(),"name",tvRetailerTwo.getText().toString());
+                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment());
             }
         });
 
         tvRetailerThree.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                bundle.putString("name",tvRetailerThree.getText().toString());
-                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment()).setArguments(bundle);
+                GeneralUtils.putStringValueInEditor(getActivity(),"name",tvRetailerThree.getText().toString());
+                GeneralUtils.connectFragmentWithBack(getActivity(),new ShowCalendarFragment());
             }
         });
     }

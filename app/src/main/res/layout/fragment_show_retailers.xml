@@ -13,11 +13,12 @@
         android:layout_marginTop="10sp"
         android:layout_marginRight="10sp"
         android:layout_marginLeft="10sp"
-        android:text="abdullah"
+        android:text="Abdullah"
         android:textSize="22sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:gravity="center"
-        android:background="@drawable/gradient_background"/>
+        android:background="@drawable/box_shape"/>
 
     <TextView
         android:id="@+id/retailer_two"
@@ -27,11 +28,12 @@
         android:layout_marginTop="5sp"
         android:layout_marginRight="10sp"
         android:layout_marginLeft="10sp"
-        android:text="adam"
+        android:text="Adam"
         android:textSize="22sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
         android:gravity="center"
-        android:background="@drawable/gradient_background"/>
+        android:textStyle="bold"
+        android:background="@drawable/box_shape"/>
 
 
     <TextView
@@ -42,11 +44,12 @@
         android:layout_marginTop="5sp"
         android:layout_marginRight="10sp"
         android:layout_marginLeft="10sp"
-        android:text="kashif"
+        android:text="Danyal"
         android:textSize="22sp"
-        android:textColor="@color/white"
+        android:textColor="@color/black"
+        android:textStyle="bold"
         android:gravity="center"
-        android:background="@drawable/gradient_background"/>
+        android:background="@drawable/box_shape"/>
 
 
 </RelativeLayout>

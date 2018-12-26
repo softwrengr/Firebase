@@ -32,7 +32,7 @@ public class CustomerHomeFragment extends Fragment {
         customActionBar();
         initUI();
         bottomNavigationView.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
-        GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
+        GeneralUtils.connectCustomerFragment(getActivity(),new CustomerAppointmentFragment());
         return view;
     }
 
@@ -50,10 +50,10 @@ public class CustomerHomeFragment extends Fragment {
             Fragment fragment;
             switch (item.getItemId()) {
                 case R.id.navigation_home:
-                    GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
+                    GeneralUtils.connectCustomerFragment(getActivity(),new CustomerAppointmentFragment());
                     return true;
                 case R.id.navigation_schedule:
-                    GeneralUtils.connectCustomerFragment(getActivity(),new CustomerAppointmentFragment());
+                    GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
                     return true;
                 case R.id.navigation_profile:
                     Toast.makeText(getActivity(), "profile", Toast.LENGTH_SHORT).show();

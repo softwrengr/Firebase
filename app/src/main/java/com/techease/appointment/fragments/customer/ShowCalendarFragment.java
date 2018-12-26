@@ -40,15 +40,18 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 
-
 public class ShowCalendarFragment extends Fragment {
     @BindView(R.id.calendar_picker)
     CalendarPickerView calendar;
+    @BindView(R.id.tvRetailerDays)
+    TextView tvRetailerDays;
+    @BindView(R.id.tvRetailerName)
+    TextView tvRetailerName;
 
     View view;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    private String strRetailerName, strFrom="", strTo="",strSelectDate,strCustomerName;
+    private String strRetailerName, strFrom = "", strTo = "", strSelectDate, strCustomerName;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -59,7 +62,6 @@ public class ShowCalendarFragment extends Fragment {
         strCustomerName = GeneralUtils.getEmail(getActivity());
         String[] splitStr = strCustomerName.split("@");
         strCustomerName = splitStr[0];
-        Toast.makeText(getActivity(), strCustomerName, Toast.LENGTH_SHORT).show();
         initUI();
 
 
@@ -70,18 +72,12 @@ public class ShowCalendarFragment extends Fragment {
         ButterKnife.bind(this, view);
         firebaseDatabase = FirebaseDatabase.getInstance();
 
-        Bundle bundle = this.getArguments();
-        if(bundle!=null){
-            strRetailerName = bundle.getString("name");
-            Toast.makeText(getActivity(), strRetailerName, Toast.LENGTH_SHORT).show();
-        }
-        else {
-            strRetailerName="abdullah";
+        strRetailerName = GeneralUtils.getName(getActivity());
+        tvRetailerName.setText(strRetailerName);
 
-        }
-
-        showRetailerDate();
+      //  showRetailerDate();
         showCalendar(strFrom);
+        showRetailerAvailability();
 
     }
 
@@ -95,7 +91,7 @@ public class ShowCalendarFragment extends Fragment {
                     Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
                 } else {
                     strFrom = dataSnapshot.child("date").getValue().toString();
-                   // strTo = dataSnapshot.child("to").getValue().toString();
+                    // strTo = dataSnapshot.child("to").getValue().toString();
 
                     showCalendar(strFrom);
                 }
@@ -130,7 +126,7 @@ public class ShowCalendarFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
+                GeneralUtils.connectFragment(getActivity(), new CustomerHomeFragment());
             }
         });
         mActionBar.setCustomView(mCustomView);
@@ -140,7 +136,7 @@ public class ShowCalendarFragment extends Fragment {
     }
 
 
-    private void showCalendar(String a){
+    private void showCalendar(String date) {
 
         final Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
@@ -151,11 +147,11 @@ public class ShowCalendarFragment extends Fragment {
 
         ArrayList<Date> arrayList = new ArrayList<>();
         try {
+
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-            Date newdate = dateformat.parse(a);
-           // Date newdate2 = dateformat.parse(b);
+            Date newdate = dateformat.parse(date);
             arrayList.add(newdate);
-          //  arrayList.add(newdate2);
+
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -166,17 +162,17 @@ public class ShowCalendarFragment extends Fragment {
                 .withHighlightedDates(arrayList);
 
 
-    calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
-        @Override
-        public void onDateSelected(Date date) {
-            formatedDate(date);
-        }
+        calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(Date date) {
+                formatedDate(date);
+            }
 
-        @Override
-        public void onDateUnselected(Date date) {
+            @Override
+            public void onDateUnselected(Date date) {
 
-        }
-    });
+            }
+        });
 
     }
 
@@ -184,14 +180,14 @@ public class ShowCalendarFragment extends Fragment {
         String strDate = null;
         SimpleDateFormat spf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
         strDate = spf.format(date);
-        if (date==null){
+        if (date == null) {
             Toast.makeText(getActivity(), "no date selected", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
             java.util.Date newDate = null;
             try {
                 newDate = spf.parse(strDate);
-                } catch (ParseException e) {
+            } catch (ParseException e) {
                 e.printStackTrace();
             }
 
@@ -199,8 +195,33 @@ public class ShowCalendarFragment extends Fragment {
             strDate = sdf.format(newDate);
 
             Bundle bundle = new Bundle();
-            bundle.putString("selected_date",strDate);
-            GeneralUtils.connectFragmentWithBack(getActivity(),new MakeAppointmentFragment()).setArguments(bundle);
+            bundle.putString("selected_date", strDate);
+            GeneralUtils.connectFragmentWithBack(getActivity(), new MakeAppointmentFragment()).setArguments(bundle);
         }
+    }
+
+    private void showRetailerAvailability() {
+
+        databaseReference = firebaseDatabase.getReference("available days").child(strRetailerName);
+        databaseReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                if (!dataSnapshot.exists()) {
+                    Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
+                } else {
+                    String from = dataSnapshot.child("from").getValue().toString();
+                    String to = dataSnapshot.child("to").getValue().toString();
+
+                    tvRetailerDays.setText("From  " + from + "  To  " + to);
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Log.d("error", error.getMessage());
+            }
+        });
     }
 }

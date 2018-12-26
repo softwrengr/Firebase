@@ -22,6 +22,8 @@ public class AppointCrud {
         this.context = context;
     }
 
+
+    //inserting all dates
     public void insertData(String date) {
 
         if (!checkItemChart(date)) {
@@ -29,29 +31,56 @@ public class AppointCrud {
             values.put("DATE", date);
             sqLiteDatabase.insert("DATE_TABLE", null, values);
             Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
-
-        }
-        else {
+        } else {
             Toast.makeText(context, "already exist", Toast.LENGTH_SHORT).show();
         }
     }
 
+
+    //inserting single user dates
+    public void insertSingleUserDate(String date) {
+
+        if (!checkDate(date)) {
+            ContentValues values = new ContentValues();
+            values.put("DATE", date);
+            sqLiteDatabase.insert("USER_DATE", null, values);
+            Toast.makeText(context, "Successful", Toast.LENGTH_SHORT).show();
+
+        } else {
+            Toast.makeText(context, "already exist", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    //check for all user
     public boolean checkItemChart(String date) {
 
         Cursor cursor = this.sqLiteDatabase.rawQuery("SELECT * FROM DATE_TABLE WHERE DATE = '" + date + "' ", null);
-
         boolean isItemAddChart = false;
         if (cursor.moveToFirst()) {
             isItemAddChart = true;
-        }
-        else {
+        } else {
             isItemAddChart = false;
         }
         return isItemAddChart;
 
     }
 
-    //fetching all certificates
+
+    //check for single users
+    public boolean checkDate(String date) {
+
+        Cursor cursor = this.sqLiteDatabase.rawQuery("SELECT * FROM USER_DATE WHERE DATE = '" + date + "' ", null);
+        boolean isItemAddChart = false;
+        if (cursor.moveToFirst()) {
+            isItemAddChart = true;
+        } else {
+            isItemAddChart = false;
+        }
+        return isItemAddChart;
+
+    }
+
+    //fetching all dates
     public Cursor getData() {
         String query = "SELECT * FROM DATE_TABLE";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);

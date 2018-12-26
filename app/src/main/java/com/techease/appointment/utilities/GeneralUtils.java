@@ -52,10 +52,14 @@ public class GeneralUtils {
     }
 
     public static String getDate(Context context) {
-        return getSharedPreferences(context).getString("date","");
+        return getSharedPreferences(context).getString("child_date","");
     }
 
     public static String getEmail(Context context){
         return getSharedPreferences(context).getString("email","");
+    }
+
+    public static String getName(Context context){
+        return getSharedPreferences(context).getString("name","");
     }
 }

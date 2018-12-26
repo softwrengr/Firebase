@@ -20,11 +20,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
+import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import java.text.ParseException;
@@ -56,7 +61,8 @@ public class MakeAppointmentFragment extends Fragment {
     @BindView(R.id.layout_select_unit)
     LinearLayout layoutSelectUnit;
 
-    private DatabaseReference database,mDatabase,databaseReference;
+    private DatabaseReference mDatabase,databaseReference;
+    FirebaseDatabase firebaseDatabase;
     private String strFirstName, strLastName,strEmail, strChildNode,strCompanyName,strAddress,strPhone,strDate,strUnit="";
     private boolean valid = false;
 
@@ -94,39 +100,25 @@ public class MakeAppointmentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(validate()){
-                    databaseReference = FirebaseDatabase.getInstance().getReference().child("users").child(strChildNode);
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_data").child(strChildNode);
-
-                    Map<String,String> map = new HashMap<>();
-                    map.put("first name",strFirstName);
-                    map.put("last name",strLastName);
-                    map.put("company",strCompanyName);
-                    map.put("phone",strPhone);
-                    map.put("address",strEmail);
-                    map.put("date",strDate);
-                    map.put("unit",strUnit);
 
 
-                    databaseReference.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    databaseReference = FirebaseDatabase.getInstance().getReference("users");
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_data").child("test");
+                    Users users = new Users(strFirstName,strLastName,strEmail,strDate,strPhone,strAddress,strCompanyName,strUnit);
+
+                    databaseReference.push().setValue(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Toast.makeText(getActivity(), "created", Toast.LENGTH_SHORT).show();
-                            }
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getActivity(), "data save", Toast.LENGTH_SHORT).show();
                         }
                     });
 
-                    mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                    mDatabase.push().setValue(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Log.d("success","data inserted successfully");
-                                Toast.makeText(getActivity(), "data inserted successfully", Toast.LENGTH_SHORT).show();
-                                GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
-                            }
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(getActivity(), "data save", Toast.LENGTH_SHORT).show();
                         }
                     });
-
 
                 }
             }

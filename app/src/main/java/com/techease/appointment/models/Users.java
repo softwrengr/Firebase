@@ -7,6 +7,7 @@ package com.techease.appointment.models;
 public class Users {
 
     public String name;
+    public String last_name;
     public String email;
     public String phone;
     public String address;
@@ -14,8 +15,9 @@ public class Users {
     public String company;
     public String unit;
 
-    public Users(String name, String email,String date, String phone, String address, String company, String unit) {
+    public Users(String name,String last_name, String email,String date, String phone, String address, String company, String unit) {
         this.name = name;
+        this.last_name = last_name;
         this.email = email;
         this.phone = phone;
         this.address = address;
@@ -78,5 +80,13 @@ public class Users {
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getLast_name() {
+        return last_name;
+    }
+
+    public void setLast_name(String last_name) {
+        this.last_name = last_name;
     }
 }

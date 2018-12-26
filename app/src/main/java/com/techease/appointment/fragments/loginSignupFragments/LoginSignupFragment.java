@@ -11,6 +11,7 @@ import android.widget.Button;
 import com.techease.appointment.R;
 import com.techease.appointment.actvities.MainActivity;
 import com.techease.appointment.fragments.customer.CustomerHomeFragment;
+import com.techease.appointment.fragments.retailers.RetailerHomeFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 
 
@@ -51,7 +52,7 @@ public class LoginSignupFragment extends Fragment {
         btnRetailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new LoginFragment();
+                Fragment fragment = new RetailerHomeFragment();
                 GeneralUtils.putStringValueInEditor(getActivity(),"type","retailer");
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
                 dialog.dismiss();
@@ -61,7 +62,7 @@ public class LoginSignupFragment extends Fragment {
         btnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new LoginFragment();
+                Fragment fragment = new CustomerHomeFragment();
                 GeneralUtils.putStringValueInEditor(getActivity(),"type","customer");
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
                 dialog.dismiss();

@@ -21,13 +21,16 @@ public class AppointDatabase extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
 
         String query = "CREATE TABLE DATE_TABLE (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE)";
+        String insert_date = "CREATE TABLE USER_DATE (ID INTEGER PRIMARY KEY AUTOINCREMENT,DATE)";
         sqLiteDatabase.execSQL(query);
+        sqLiteDatabase.execSQL(insert_date);
 
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE IF EXISTS DATE_TABLE");
+        db.execSQL("DROP TABLE IF EXISTS USER_DATE");
         onCreate(db);
     }
 }
