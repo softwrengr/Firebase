@@ -1,6 +1,7 @@
 package com.techease.appointment.fragments.customer;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
@@ -24,6 +25,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.savvi.rangedatepicker.CalendarPickerView;
 import com.techease.appointment.R;
+import com.techease.appointment.helpers.AppointCrud;
+import com.techease.appointment.models.DateModel;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import org.joda.time.DateTime;
@@ -34,6 +37,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 import butterknife.BindView;
@@ -52,7 +57,8 @@ public class ShowCalendarFragment extends Fragment {
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private String strRetailerName, strFrom = "", strTo = "", strSelectDate, strCustomerName;
-
+    AppointCrud appointCrud;
+    HashMap<String,String> hashMap;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -73,11 +79,15 @@ public class ShowCalendarFragment extends Fragment {
         firebaseDatabase = FirebaseDatabase.getInstance();
 
         strRetailerName = GeneralUtils.getName(getActivity());
-        tvRetailerName.setText(strRetailerName);
+       // tvRetailerName.setText(strRetailerName);
+        appointCrud = new AppointCrud(getActivity());
+        hashMap = new HashMap<>();
 
-      //  showRetailerDate();
-        showCalendar(strFrom);
+        showSelectedDate();
+        //  showRetailerDate();
+//        showCalendar(strFrom);
         showRetailerAvailability();
+
 
     }
 
@@ -149,13 +159,15 @@ public class ShowCalendarFragment extends Fragment {
         try {
 
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
             Date newdate = dateformat.parse(date);
             arrayList.add(newdate);
+
 
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, YYYY", Locale.getDefault());
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
 
         calendar.init(lastYear.getTime(), nextYear.getTime(), simpleDateFormat)
                 .withSelectedDate(new Date())
@@ -223,5 +235,22 @@ public class ShowCalendarFragment extends Fragment {
                 Log.d("error", error.getMessage());
             }
         });
+    }
+
+    private void showSelectedDate(){
+        Cursor cursor = appointCrud.getData();
+        List<String> dateArrayList = new ArrayList<String>();
+
+        while (cursor.moveToNext()) {
+            String strDates = cursor.getString(1);
+            dateArrayList.add(strDates);
+            for (int i = 0; i<dateArrayList.size(); i++){
+                Log.d("zma for loop", String.valueOf(dateArrayList.size()));
+            }
+            for (String dates:dateArrayList){
+                showCalendar(dates);
+            }
+
+        }
     }
 }

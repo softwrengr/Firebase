@@ -82,7 +82,7 @@ public class AppointCrud {
 
     //fetching all dates
     public Cursor getData() {
-        String query = "SELECT * FROM DATE_TABLE";
+        String query = "SELECT * FROM USER_DATE";
         Cursor cursor = sqLiteDatabase.rawQuery(query, null);
         return cursor;
     }
