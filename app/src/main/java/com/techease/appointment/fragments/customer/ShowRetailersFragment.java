@@ -18,7 +18,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
-import com.techease.appointment.fragments.customer.MakeAppointmentFragment;
+
 import com.techease.appointment.fragments.customer.ShowCalendarFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 

@@ -101,10 +101,9 @@ public class MakeAppointmentFragment extends Fragment {
             public void onClick(View v) {
                 if(validate()){
 
-
                     databaseReference = FirebaseDatabase.getInstance().getReference("users");
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_data").child("test");
-                    Users users = new Users(strFirstName,strLastName,strEmail,strDate,strPhone,strAddress,strCompanyName,strUnit);
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_data").child(strChildNode);
+                    Users users = new Users(strAddress,strCompanyName,strDate,strFirstName,strLastName,strPhone,strUnit);
 
                     databaseReference.push().setValue(users).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
@@ -117,6 +116,7 @@ public class MakeAppointmentFragment extends Fragment {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getActivity(), "data save", Toast.LENGTH_SHORT).show();
+                            GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
                         }
                     });
 

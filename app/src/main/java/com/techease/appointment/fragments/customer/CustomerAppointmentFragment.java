@@ -35,6 +35,7 @@ import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -49,6 +50,7 @@ public class CustomerAppointmentFragment extends Fragment {
     private FirebaseRecyclerAdapter adapter;
     private String strEmail, strChildNode;
     AppointCrud appointCrud;
+    Context context;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -65,9 +67,9 @@ public class CustomerAppointmentFragment extends Fragment {
 
     private void initUI() {
         ButterKnife.bind(this, view);
+        context = getActivity();
         firebaseDatabase = FirebaseDatabase.getInstance();
         Typeface tf = Typeface.createFromAsset(getActivity().getAssets(), "OpenSans_Regular.ttf");
-        firebaseDatabase = FirebaseDatabase.getInstance();
         alertDialog = AlertUtils.createProgressDialog(getActivity());
         alertDialog.show();
         showCustomerData();
@@ -75,7 +77,7 @@ public class CustomerAppointmentFragment extends Fragment {
 
 
     private void showCustomerData(){
-        databaseReference = firebaseDatabase.getReference("single_user_data").child("test");
+        databaseReference = firebaseDatabase.getReference("single_user_data").child(strChildNode);
 
         rvUserList.setHasFixedSize(true);
         rvUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -91,11 +93,17 @@ public class CustomerAppointmentFragment extends Fragment {
                                 appointCrud  = new AppointCrud(getActivity());
                                 appointCrud.insertSingleUserDate(snapshot.child("date").getValue().toString());
 
-                                return new Users(snapshot.child("address").getValue().toString(),
+                                List<String> dateArrayList = new ArrayList<String>();
+                                dateArrayList.add(snapshot.child("date").getValue().toString());
+                                for (int i = 0; i < dateArrayList.size(); i++) {
+                                    Toast.makeText(getActivity(), dateArrayList.get(0), Toast.LENGTH_SHORT).show();
+                                }
+
+                                return new Users(
+                                        snapshot.child("address").getValue().toString(),
                                         snapshot.child("company").getValue().toString(),
                                         snapshot.child("date").getValue().toString(),
-                                        snapshot.child("name").getValue().toString(),
-                                        snapshot.child("email").getValue().toString(),
+                                        snapshot.child("firstname").getValue().toString(),
                                         snapshot.child("last_name").getValue().toString(),
                                         snapshot.child("phone").getValue().toString(),
                                         snapshot.child("unit").getValue().toString());
@@ -105,8 +113,9 @@ public class CustomerAppointmentFragment extends Fragment {
 
         adapter = new FirebaseRecyclerAdapter<Users, SeeApointmentFragment.UsersViewHolder>(options) {
             @Override
-            protected void onBindViewHolder(@NonNull SeeApointmentFragment.UsersViewHolder holder, int position, @NonNull Users model) {
-                holder.setName(getActivity(),model.getName(),model.getCompany(),model.getDate(),model.getAddress(),model.getPhone(),model.getUnit());
+            protected void onBindViewHolder(@NonNull SeeApointmentFragment.UsersViewHolder holder, int position, @NonNull final Users model) {
+
+                holder.setName(getActivity(),model.getAddress(),model.getCompany(),model.getDate(),model.getFirstname(),model.getLast_name(),model.getPhone(),model.getUnit());
 
             }
 
@@ -137,24 +146,6 @@ public class CustomerAppointmentFragment extends Fragment {
             mView = itemView;
         }
 
-        public void  setName(Activity activity, String modelName, String company, String date, String address, String phone, String unit){
-            TextView tvCompany = mView.findViewById(R.id.tv_company_name);
-            TextView tvName = mView.findViewById(R.id.tv_name);
-            TextView tvAddress = mView.findViewById(R.id.tv_address);
-            TextView tvDate = mView.findViewById(R.id.tv_date);
-            TextView tvPhone = mView.findViewById(R.id.tv_phone_no);
-            TextView tvUnit = mView.findViewById(R.id.tv_unit);
-
-            tvName.setText(modelName);
-            tvCompany.setText(company);
-            tvDate.setText(date);
-            tvAddress.setText(address);
-            tvPhone.setText(phone);
-            tvUnit.setText(unit);
-
-            dateForNotification(activity,date);
-
-        }
     }
 
     @Override

@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,6 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -25,8 +30,10 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.savvi.rangedatepicker.CalendarPickerView;
 import com.techease.appointment.R;
+import com.techease.appointment.fragments.retailers.SeeApointmentFragment;
 import com.techease.appointment.helpers.AppointCrud;
 import com.techease.appointment.models.DateModel;
+import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import org.joda.time.DateTime;
@@ -40,6 +47,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,9 +64,12 @@ public class ShowCalendarFragment extends Fragment {
     View view;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
-    private String strRetailerName, strFrom = "", strTo = "", strSelectDate, strCustomerName;
+    private String strRetailerName, strCustomerName;
     AppointCrud appointCrud;
-    HashMap<String,String> hashMap;
+    boolean singleUsercheck = false;
+    ArrayList<Date> arrayList;
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,42 +88,15 @@ public class ShowCalendarFragment extends Fragment {
     private void initUI() {
         ButterKnife.bind(this, view);
         firebaseDatabase = FirebaseDatabase.getInstance();
-
         strRetailerName = GeneralUtils.getName(getActivity());
-       // tvRetailerName.setText(strRetailerName);
+        tvRetailerName.setText(strRetailerName);
         appointCrud = new AppointCrud(getActivity());
-        hashMap = new HashMap<>();
+        arrayList = new ArrayList<>();
 
-        showSelectedDate();
-        //  showRetailerDate();
-//        showCalendar(strFrom);
+        showCalendar();
         showRetailerAvailability();
+        getDates();
 
-
-    }
-
-    private void showRetailerDate() {
-        databaseReference = firebaseDatabase.getReference("users").child(strCustomerName);
-        databaseReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-
-                if (!dataSnapshot.exists()) {
-                    Toast.makeText(getActivity(), "No data available", Toast.LENGTH_SHORT).show();
-                } else {
-                    strFrom = dataSnapshot.child("date").getValue().toString();
-                    // strTo = dataSnapshot.child("to").getValue().toString();
-
-                    showCalendar(strFrom);
-                }
-
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                Log.d("error", error.getMessage());
-            }
-        });
     }
 
 
@@ -146,7 +130,7 @@ public class ShowCalendarFragment extends Fragment {
     }
 
 
-    private void showCalendar(String date) {
+    private void showCalendar() {
 
         final Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
@@ -155,18 +139,6 @@ public class ShowCalendarFragment extends Fragment {
         lastYear.add(Calendar.YEAR, -1);
 
 
-        ArrayList<Date> arrayList = new ArrayList<>();
-        try {
-
-            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
-
-            Date newdate = dateformat.parse(date);
-            arrayList.add(newdate);
-
-
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
 
         calendar.init(lastYear.getTime(), nextYear.getTime(), simpleDateFormat)
@@ -227,7 +199,6 @@ public class ShowCalendarFragment extends Fragment {
 
                     tvRetailerDays.setText("From  " + from + "  To  " + to);
                 }
-
             }
 
             @Override
@@ -237,20 +208,59 @@ public class ShowCalendarFragment extends Fragment {
         });
     }
 
-    private void showSelectedDate(){
-        Cursor cursor = appointCrud.getData();
-        List<String> dateArrayList = new ArrayList<String>();
+    private void getDates() {
+        databaseReference = firebaseDatabase.getReference("single_user_data").child(strCustomerName);
+        databaseReference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                       if(!dataSnapshot.exists()){
+                           Toast.makeText(getActivity(), "no", Toast.LENGTH_SHORT).show();
+                       }
+                       else {
+                           collectPhoneNumbers((Map<String, Object>) dataSnapshot.getValue());
+                       }
+                    }
 
-        while (cursor.moveToNext()) {
-            String strDates = cursor.getString(1);
-            dateArrayList.add(strDates);
-            for (int i = 0; i<dateArrayList.size(); i++){
-                Log.d("zma for loop", String.valueOf(dateArrayList.size()));
-            }
-            for (String dates:dateArrayList){
-                showCalendar(dates);
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("error", databaseError.getMessage());
+                    }
+                });
+
+    }
+
+    private void collectPhoneNumbers(Map<String, Object> users) {
+
+        ArrayList<String> phoneNumbers = new ArrayList<>();
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : users.entrySet()) {
+
+            //Get user map
+            Map singleUser = (Map) entry.getValue();
+            //Get phone field and append to list
+            phoneNumbers.add((String) singleUser.get("date"));
+        }
+
+
+        try {
+
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+            for(int i=0;i<phoneNumbers.size();i++){
+                Date newdate = dateformat.parse(phoneNumbers.get(i));
+                arrayList.add(newdate);
             }
 
+            showCalendar();
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
         }
     }
+
+
 }

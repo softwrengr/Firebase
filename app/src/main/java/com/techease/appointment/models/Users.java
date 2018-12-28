@@ -6,48 +6,22 @@ package com.techease.appointment.models;
 
 public class Users {
 
-    public String name;
-    public String last_name;
-    public String email;
-    public String phone;
     public String address;
-    public String date;
     public String company;
+    public String date;
+    public String firstname;
+    public String last_name;
+    public String phone;
     public String unit;
 
-    public Users(String name,String last_name, String email,String date, String phone, String address, String company, String unit) {
-        this.name = name;
-        this.last_name = last_name;
-        this.email = email;
-        this.phone = phone;
+    public Users(String address, String company, String date, String firstname, String last_name, String phone, String unit) {
         this.address = address;
-        this.date = date;
         this.company = company;
-        this.unit = unit;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
+        this.date = date;
+        this.firstname = firstname;
+        this.last_name = last_name;
         this.phone = phone;
+        this.unit = unit;
     }
 
     public String getAddress() {
@@ -66,14 +40,6 @@ public class Users {
         this.company = company;
     }
 
-    public String getUnit() {
-        return unit;
-    }
-
-    public void setUnit(String unit) {
-        this.unit = unit;
-    }
-
     public String getDate() {
         return date;
     }
@@ -82,11 +48,35 @@ public class Users {
         this.date = date;
     }
 
+    public String getFirstname() {
+        return firstname;
+    }
+
+    public void setFirstname(String firstname) {
+        this.firstname = firstname;
+    }
+
     public String getLast_name() {
         return last_name;
     }
 
     public void setLast_name(String last_name) {
         this.last_name = last_name;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getUnit() {
+        return unit;
+    }
+
+    public void setUnit(String unit) {
+        this.unit = unit;
     }
 }

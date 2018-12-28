@@ -22,12 +22,12 @@ public class GeneralUtils {
     }
 
     public static Fragment connectFrag(Context context,Fragment fragment){
-        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.retailer_container,fragment).addToBackStack("").commit();
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.retailer_container,fragment).commit();
         return fragment;
     }
 
     public static Fragment connectCustomerFragment(Context context,Fragment fragment){
-        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.customer_fragment_container,fragment).addToBackStack("").commit();
+        ((AppCompatActivity)context).getSupportFragmentManager().beginTransaction().replace(R.id.customer_fragment_container,fragment).commit();
         return fragment;
     }
 
@@ -53,6 +53,10 @@ public class GeneralUtils {
 
     public static String getDate(Context context) {
         return getSharedPreferences(context).getString("child_date","");
+    }
+
+    public static String singleDate(Context context) {
+        return getSharedPreferences(context).getString("single_date","");
     }
 
     public static String getEmail(Context context){

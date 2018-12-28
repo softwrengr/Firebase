@@ -2,38 +2,34 @@ package com.techease.appointment.fragments.retailers;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.firebase.ui.database.SnapshotParser;
 import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
-import com.techease.appointment.fragments.customer.CustomerHomeFragment;
 import com.techease.appointment.helpers.AppointCrud;
 import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -89,8 +85,7 @@ public class SeeApointmentFragment extends Fragment {
                                 return new Users(snapshot.child("address").getValue().toString(),
                                         snapshot.child("company").getValue().toString(),
                                         snapshot.child("date").getValue().toString(),
-                                        snapshot.child("name").getValue().toString(),
-                                        snapshot.child("email").getValue().toString(),
+                                        snapshot.child("firstname").getValue().toString(),
                                         snapshot.child("last_name").getValue().toString(),
                                         snapshot.child("phone").getValue().toString(),
                                         snapshot.child("unit").getValue().toString());
@@ -102,7 +97,7 @@ public class SeeApointmentFragment extends Fragment {
         adapter = new FirebaseRecyclerAdapter<Users, UsersViewHolder>(options) {
             @Override
             protected void onBindViewHolder(@NonNull UsersViewHolder holder, int position, @NonNull Users model) {
-                holder.setName(getActivity(),model.getName(),model.getCompany(),model.getDate(),model.getAddress(),model.getPhone(),model.getUnit());
+                holder.setName(getActivity(),  model.getAddress(),model.getCompany(),model.getDate(),model.getFirstname(),model.getLast_name(),model.getPhone(),model.getUnit());
 
 
             }
@@ -134,7 +129,8 @@ public class SeeApointmentFragment extends Fragment {
             mView = itemView;
         }
 
-        public void  setName(Activity activity,String modelName, String company, String date, String address, String phone, String unit){
+
+        public void setName(FragmentActivity activity, String address, String company, String date, String firstname, String last_name, String phone, String unit) {
             TextView tvCompany = mView.findViewById(R.id.tv_company_name);
             TextView tvName = mView.findViewById(R.id.tv_name);
             TextView tvAddress = mView.findViewById(R.id.tv_address);
@@ -142,15 +138,14 @@ public class SeeApointmentFragment extends Fragment {
             TextView tvPhone = mView.findViewById(R.id.tv_phone_no);
             TextView tvUnit = mView.findViewById(R.id.tv_unit);
 
-            tvName.setText(modelName);
+            tvName.setText(firstname+" "+last_name);
             tvCompany.setText(company);
-            tvDate.setText(date);
             tvAddress.setText(address);
+            tvDate.setText(date);
             tvPhone.setText(phone);
             tvUnit.setText(unit);
 
             dateForNotification(activity,date);
-
         }
     }
 

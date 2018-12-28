@@ -54,7 +54,7 @@ public class LoginSignupFragment extends Fragment {
             public void onClick(View v) {
                 Fragment fragment = new RetailerHomeFragment();
                 GeneralUtils.putStringValueInEditor(getActivity(),"type","retailer");
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
                 dialog.dismiss();
             }
         });
@@ -62,9 +62,9 @@ public class LoginSignupFragment extends Fragment {
         btnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new CustomerHomeFragment();
+                Fragment fragment = new LoginFragment();
                 GeneralUtils.putStringValueInEditor(getActivity(),"type","customer");
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).addToBackStack("").commit();
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
                 dialog.dismiss();
             }
         });
