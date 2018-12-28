@@ -54,7 +54,7 @@ public class RetailerHomeFragment extends Fragment {
                     GeneralUtils.connectFrag(getActivity(),new SeeApointmentFragment());
                     return true;
                 case R.id.navigation_profile:
-                    Toast.makeText(getActivity(), "profile", Toast.LENGTH_SHORT).show();
+                    GeneralUtils.connectFrag(getActivity(),new RetailerProfileFragment());
                     return true;
             }
             return false;

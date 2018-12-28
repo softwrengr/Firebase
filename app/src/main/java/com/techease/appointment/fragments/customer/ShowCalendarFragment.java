@@ -196,7 +196,6 @@ public class ShowCalendarFragment extends Fragment {
                 } else {
                     String from = dataSnapshot.child("from").getValue().toString();
                     String to = dataSnapshot.child("to").getValue().toString();
-
                     tvRetailerDays.setText("From  " + from + "  To  " + to);
                 }
             }
@@ -215,12 +214,11 @@ public class ShowCalendarFragment extends Fragment {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         //Get map of users in datasnapshot
-                       if(!dataSnapshot.exists()){
-                           Toast.makeText(getActivity(), "no", Toast.LENGTH_SHORT).show();
-                       }
-                       else {
-                           collectPhoneNumbers((Map<String, Object>) dataSnapshot.getValue());
-                       }
+                        if (!dataSnapshot.exists()) {
+                            Toast.makeText(getActivity(), "no", Toast.LENGTH_SHORT).show();
+                        } else {
+                            collectPhoneNumbers((Map<String, Object>) dataSnapshot.getValue());
+                        }
                     }
 
                     @Override
@@ -249,7 +247,7 @@ public class ShowCalendarFragment extends Fragment {
 
             SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
 
-            for(int i=0;i<phoneNumbers.size();i++){
+            for (int i = 0; i < phoneNumbers.size(); i++) {
                 Date newdate = dateformat.parse(phoneNumbers.get(i));
                 arrayList.add(newdate);
             }

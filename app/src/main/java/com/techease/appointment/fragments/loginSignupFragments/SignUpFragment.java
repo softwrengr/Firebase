@@ -3,6 +3,7 @@ package com.techease.appointment.fragments.loginSignupFragments;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,10 +17,14 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.techease.appointment.R;
 import com.techease.appointment.actvities.MainActivity;
 import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -34,10 +39,14 @@ public class SignUpFragment extends Fragment {
     EditText etEmail;
     @BindView(R.id.et_userPassword)
     EditText etPassword;
+    @BindView(R.id.et_user_name)
+    EditText etUserName;
+    @BindView(R.id.et_user_phone)
+    EditText etUserPhone;
     @BindView(R.id.btn_signup)
     Button btnSignup;
 
-    String strName, strEmail, strPhone, strPassword, strResponse,strAddress;
+    String strName, strEmail, strPhone, strPassword;
 
     private boolean valid = false;
     FirebaseAuth auth;
@@ -54,9 +63,7 @@ public class SignUpFragment extends Fragment {
 
     private void initUI() {
         ButterKnife.bind(this, view);
-
         auth = FirebaseAuth.getInstance();
-
 
         tvSignin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -72,6 +79,22 @@ public class SignUpFragment extends Fragment {
                     alertDialog = AlertUtils.createProgressDialog(getActivity());
                     alertDialog.show();
                     userRegistration();
+
+                    String[] splitStr = strEmail.split("@");
+                    String strProfileNode = splitStr[0];
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Profile").child(strProfileNode);
+                    Map<String,String> map = new HashMap<>();
+                    map.put("name",strName);
+                    map.put("email",strEmail);
+                    map.put("phone",strPhone);
+                    mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        @Override
+                        public void onComplete(@NonNull Task<Void> task) {
+                            if(task.isSuccessful()){
+                                Log.d("profile","successfully created profile");
+                            }
+                        }
+                    });
                 }
             }
         });
@@ -101,8 +124,25 @@ public class SignUpFragment extends Fragment {
     private boolean validate() {
         valid = true;
 
+        strName = etUserName.getText().toString();
+        strPhone = etUserPhone.getText().toString();
         strEmail = etEmail.getText().toString();
         strPassword = etPassword.getText().toString();
+
+
+        if (strName.isEmpty()) {
+            etUserName.setError("enter a valid email address");
+            valid = false;
+        } else {
+            etUserName.setError(null);
+        }
+
+        if (strPhone.isEmpty()) {
+            etUserPhone.setError("enter a valid email address");
+            valid = false;
+        } else {
+            etUserPhone.setError(null);
+        }
 
         if (strEmail.isEmpty()) {
             etEmail.setError("enter a valid email address");

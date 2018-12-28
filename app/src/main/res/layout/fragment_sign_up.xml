@@ -28,6 +28,35 @@
                    android:textSize="22sp"
                    android:layout_gravity="center"/>
 
+                <EditText
+                    android:id="@+id/et_user_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:layout_marginLeft="30sp"
+                    android:hint="Name"
+                    android:inputType="text"
+                    android:backgroundTint="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:imeOptions="actionNext"
+                    android:layout_marginRight="30sp"
+                    android:layout_marginTop="10sp"
+                    />
+                <EditText
+                    android:id="@+id/et_user_phone"
+                    android:layout_width="match_parent"
+                    android:layout_height="50sp"
+                    android:layout_marginLeft="30sp"
+                    android:hint="Phone"
+                    android:inputType="text"
+                    android:backgroundTint="@color/white"
+                    android:textColorHint="@color/white"
+                    android:textColor="@color/white"
+                    android:imeOptions="actionNext"
+                    android:layout_marginRight="30sp"
+                    android:layout_marginTop="10sp"
+                    />
+
 
 
                 <EditText
@@ -45,20 +74,6 @@
                     android:layout_marginTop="10sp"
                     />
 
-                <!--<EditText-->
-                    <!--android:id="@+id/et_userAddress"-->
-                    <!--android:layout_width="match_parent"-->
-                    <!--android:layout_height="50sp"-->
-                    <!--android:layout_marginLeft="30sp"-->
-                    <!--android:hint="Address"-->
-                    <!--android:inputType="text"-->
-                    <!--android:backgroundTint="@color/white"-->
-                    <!--android:textColorHint="@color/white"-->
-                    <!--android:textColor="@color/white"-->
-                    <!--android:imeOptions="actionNext"-->
-                    <!--android:layout_marginRight="30sp"-->
-                    <!--android:layout_marginTop="10sp"-->
-                    <!--/>-->
 
                 <EditText
                     android:id="@+id/et_userPassword"

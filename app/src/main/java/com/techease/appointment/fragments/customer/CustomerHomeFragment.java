@@ -56,7 +56,7 @@ public class CustomerHomeFragment extends Fragment {
                     GeneralUtils.connectCustomerFragment(getActivity(),new CustomerAppointmentFragment());
                     return true;
                 case R.id.navigation_profile:
-                    Toast.makeText(getActivity(), "profile", Toast.LENGTH_SHORT).show();
+                    GeneralUtils.connectCustomerFragment(getActivity(),new CustomerProfileFragment());
                     return true;
             }
             return false;
