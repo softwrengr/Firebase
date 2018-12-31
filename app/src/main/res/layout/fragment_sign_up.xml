@@ -23,9 +23,10 @@
                    android:layout_width="wrap_content"
                    android:layout_height="wrap_content"
                    android:text="Registration"
-                   android:textStyle="bold"
                    android:textColor="@color/white"
-                   android:textSize="22sp"
+                   android:textSize="20sp"
+                   android:layout_marginTop="20sp"
+                   android:typeface="sans"
                    android:layout_gravity="center"/>
 
                 <EditText
@@ -48,7 +49,7 @@
                     android:layout_height="50sp"
                     android:layout_marginLeft="30sp"
                     android:hint="Phone"
-                    android:inputType="text"
+                    android:inputType="number"
                     android:backgroundTint="@color/white"
                     android:textColorHint="@color/white"
                     android:textColor="@color/white"
@@ -99,7 +100,7 @@
                     android:layout_marginLeft="30sp"
                     android:layout_marginRight="30sp"
                     android:layout_marginTop="20sp"
-                    android:background="@color/colorPrimary"
+                    android:background="@color/colorAccent"
                     android:gravity="center"
                     android:text="Sign up"
                     android:textColor="@color/white" />
@@ -118,7 +119,9 @@
                         android:layout_alignParentBottom="true"
                         android:layout_marginBottom="20sp"
                         android:layout_marginLeft="30sp"
-                        android:text="Already Registered?"
+                        android:text="Already have an account?"
+                        android:gravity="right"
+                        android:typeface="sans"
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
@@ -132,7 +135,8 @@
                         android:layout_toRightOf="@id/tv_onboard"
                         android:text="Login"
                         android:textColor="@color/white"
-                        android:textSize="18sp"
+                        android:textSize="17sp"
+                        android:typeface="sans"
                         android:textStyle="bold" />
                 </LinearLayout>
 

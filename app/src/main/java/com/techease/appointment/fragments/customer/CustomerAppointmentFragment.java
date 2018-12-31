@@ -28,6 +28,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
+import com.techease.appointment.actvities.MainActivity;
 import com.techease.appointment.fragments.retailers.SeeApointmentFragment;
 import com.techease.appointment.helpers.AppointCrud;
 import com.techease.appointment.models.Users;
@@ -45,6 +46,8 @@ public class CustomerAppointmentFragment extends Fragment {
     View view;
     @BindView(R.id.rv_single_user_list)
     RecyclerView rvUserList;
+    @BindView(R.id.iv_customer_back)
+    ImageView ivBack;
     FirebaseDatabase firebaseDatabase;
     DatabaseReference databaseReference;
     private FirebaseRecyclerAdapter adapter;
@@ -57,7 +60,7 @@ public class CustomerAppointmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_customer, container, false);
-        customActionBar();
+        ((MainActivity) getActivity()).getSupportActionBar().hide();
         strEmail = GeneralUtils.getEmail(getActivity());
         String[] splitStr = strEmail.split("@");
         strChildNode = splitStr[0];
@@ -73,10 +76,17 @@ public class CustomerAppointmentFragment extends Fragment {
         alertDialog = AlertUtils.createProgressDialog(getActivity());
         alertDialog.show();
         showCustomerData();
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
+            }
+        });
     }
 
 
-    private void showCustomerData(){
+    private void showCustomerData() {
         databaseReference = firebaseDatabase.getReference("single_user_data").child(strChildNode);
 
         rvUserList.setHasFixedSize(true);
@@ -89,8 +99,8 @@ public class CustomerAppointmentFragment extends Fragment {
                             @Override
                             public Users parseSnapshot(@NonNull DataSnapshot snapshot) {
 
-                                GeneralUtils.putStringValueInEditor(getActivity(),"child_date",snapshot.child("date").getValue().toString());
-                                appointCrud  = new AppointCrud(getActivity());
+                                GeneralUtils.putStringValueInEditor(getActivity(), "child_date", snapshot.child("date").getValue().toString());
+                                appointCrud = new AppointCrud(getActivity());
                                 appointCrud.insertSingleUserDate(snapshot.child("date").getValue().toString());
 
                                 List<String> dateArrayList = new ArrayList<String>();
@@ -115,7 +125,7 @@ public class CustomerAppointmentFragment extends Fragment {
             @Override
             protected void onBindViewHolder(@NonNull SeeApointmentFragment.UsersViewHolder holder, int position, @NonNull final Users model) {
 
-                holder.setName(getActivity(),model.getAddress(),model.getCompany(),model.getDate(),model.getFirstname(),model.getLast_name(),model.getPhone(),model.getUnit());
+                holder.setName(getActivity(), model.getAddress(), model.getCompany(), model.getDate(), model.getFirstname(), model.getLast_name(), model.getPhone(), model.getUnit());
 
             }
 
@@ -127,6 +137,7 @@ public class CustomerAppointmentFragment extends Fragment {
 
                 return new SeeApointmentFragment.UsersViewHolder(view);
             }
+
             @Override
             public void onDataChanged() {
                 alertDialog.dismiss();
@@ -160,30 +171,4 @@ public class CustomerAppointmentFragment extends Fragment {
         adapter.stopListening();
     }
 
-    public static void dateForNotification(Activity activity,String date){
-
-        GeneralUtils.putStringValueInEditor(activity,"date",date);
-    }
-
-    public void customActionBar() {
-        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setDisplayHomeAsUpEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(getActivity());
-        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-        ImageView ivBack = mCustomView.findViewById(R.id.ivBack);
-        TextView tvTitle = mCustomView.findViewById(R.id.title);
-        tvTitle.setText("My Appointment");
-        ivBack.setVisibility(View.VISIBLE);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
-            }
-        });
-        mActionBar.setCustomView(mCustomView);
-        mActionBar.setDisplayShowCustomEnabled(true);
-        mActionBar.show();
-    }
 }

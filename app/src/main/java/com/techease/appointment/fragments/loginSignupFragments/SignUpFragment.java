@@ -80,21 +80,13 @@ public class SignUpFragment extends Fragment {
                     alertDialog.show();
                     userRegistration();
 
-                    String[] splitStr = strEmail.split("@");
-                    String strProfileNode = splitStr[0];
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("Profile").child(strProfileNode);
-                    Map<String,String> map = new HashMap<>();
-                    map.put("name",strName);
-                    map.put("email",strEmail);
-                    map.put("phone",strPhone);
-                    mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                        @Override
-                        public void onComplete(@NonNull Task<Void> task) {
-                            if(task.isSuccessful()){
-                                Log.d("profile","successfully created profile");
-                            }
-                        }
-                    });
+                    if(GeneralUtils.getUserType(getActivity()).equals("customer")){
+                        setProfile("Customer_profile");
+                    }
+                    else {
+                    setProfile("Retailer_profile");
+                    }
+
                 }
             }
         });
@@ -158,6 +150,24 @@ public class SignUpFragment extends Fragment {
             etPassword.setError(null);
         }
         return valid;
+    }
+
+    private void setProfile(String type){
+        String[] splitStr = strEmail.split("@");
+        String strProfileNode = splitStr[0];
+        mDatabase = FirebaseDatabase.getInstance().getReference().child("Profile").child(type).child(strProfileNode);
+        Map<String,String> map = new HashMap<>();
+        map.put("name",strName);
+        map.put("email",strEmail);
+        map.put("phone",strPhone);
+        mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                if(task.isSuccessful()){
+                    Log.d("profile","successfully created profile");
+                }
+            }
+        });
     }
 
 }

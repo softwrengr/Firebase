@@ -24,7 +24,7 @@
         android:layout_width="200sp"
         android:layout_height="40sp"
         android:layout_marginTop="20sp"
-        android:background="@color/colorPrimary"
+        android:background="@drawable/gradient_background"
         android:text="Set your Schedule"
         android:layout_below="@id/set_calendar"
         android:textAllCaps="false"

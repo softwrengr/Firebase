@@ -29,20 +29,19 @@ public class LoginSignupFragment extends Fragment {
         btnGoLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showDialog();
-
+                showDialog(new LoginFragment());
             }
         });
         btnGoSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GeneralUtils.connectFragment(getActivity(),new SignUpFragment());
+                showDialog(new SignUpFragment());
             }
         });
         return view;
     }
 
-    private void showDialog(){
+    private void showDialog(final Fragment fragment){
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.check_user_layout);
         Button btnCustomer,btnRetailer;
@@ -52,7 +51,6 @@ public class LoginSignupFragment extends Fragment {
         btnRetailer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new RetailerHomeFragment();
                 GeneralUtils.putStringValueInEditor(getActivity(),"type","retailer");
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
                 dialog.dismiss();
@@ -62,7 +60,6 @@ public class LoginSignupFragment extends Fragment {
         btnCustomer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Fragment fragment = new LoginFragment();
                 GeneralUtils.putStringValueInEditor(getActivity(),"type","customer");
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,fragment).commit();
                 dialog.dismiss();

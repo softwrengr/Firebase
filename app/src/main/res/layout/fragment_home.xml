@@ -21,7 +21,7 @@
           android:layout_gravity="bottom"
           android:layout_alignParentBottom="true"
           android:background="?android:attr/windowBackground"
-          app:itemBackground="@color/bgBottomNavigation"
+          app:itemBackground="@drawable/gradient_background"
           android:foreground="?attr/selectableItemBackground"
           app:itemIconTint="@android:color/white"
           app:itemTextColor="@android:color/white"

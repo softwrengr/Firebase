@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.techease.appointment.R;
+import com.techease.appointment.actvities.MainActivity;
 import com.techease.appointment.helpers.AppointCrud;
 import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.AlertUtils;
@@ -50,7 +51,7 @@ public class SeeApointmentFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_see_apointment, container, false);
-        customActionBar();
+        ((MainActivity)getActivity()).getSupportActionBar().hide();
 //        strEmail = GeneralUtils.getEmail(getActivity());
 //        String[] splitStr = strEmail.split("@");
 //        strChildNode = splitStr[0];
@@ -166,28 +167,6 @@ public class SeeApointmentFragment extends Fragment {
        GeneralUtils.putStringValueInEditor(activity,"date",date);
     }
 
-
-    public void customActionBar() {
-        android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();
-        mActionBar.setDisplayShowHomeEnabled(false);
-        mActionBar.setDisplayShowTitleEnabled(false);
-        mActionBar.setDisplayHomeAsUpEnabled(false);
-        LayoutInflater mInflater = LayoutInflater.from(getActivity());
-        View mCustomView = mInflater.inflate(R.layout.custom_actionbar, null);
-        ImageView ivBack = mCustomView.findViewById(R.id.ivBack);
-        TextView tvTitle = mCustomView.findViewById(R.id.title);
-        tvTitle.setText("All Appointment");
-        ivBack.setVisibility(View.VISIBLE);
-        ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                GeneralUtils.connectFragment(getActivity(),new RetailerHomeFragment());
-            }
-        });
-        mActionBar.setCustomView(mCustomView);
-        mActionBar.setDisplayShowCustomEnabled(true);
-        mActionBar.show();
-    }
 }
 
 

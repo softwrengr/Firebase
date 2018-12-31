@@ -7,208 +7,65 @@
     tools:context="com.techease.appointment.fragments.customer.CustomerAppointmentFragment">
 
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_single_user_list"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-    </android.support.v7.widget.RecyclerView>
+        android:layout_height="match_parent">
 
 
-    <!--<android.support.v7.widget.CardView-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_gravity="center"-->
-        <!--android:background="@color/white"-->
-        <!--card_view:cardCornerRadius="10dp"-->
-        <!--card_view:cardPreventCornerOverlap="true"-->
-        <!--card_view:cardUseCompatPadding="true">-->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180sp"
+        android:background="@drawable/gradient_background">
 
-        <!--<LinearLayout-->
-            <!--android:layout_width="match_parent"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:background="@drawable/box_shape"-->
-            <!--android:orientation="vertical"-->
-            <!--android:padding="5sp">-->
+        <ImageView
+            android:id="@+id/iv_customer_back"
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:src="@drawable/back"
+            android:padding="10sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginLeft="30sp"
+            />
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="45sp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="5sp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Name : "-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:typeface="sans"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/customer_tv_name"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Name"-->
-                    <!--android:textSize="16sp" />-->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="My Appointment"
+            android:textColor="#ffffff"
+            android:textSize="24sp"
+            android:layout_marginTop="30sp"
+            android:layout_centerHorizontal="true"
+            android:typeface="sans" />
 
 
-            <!--</LinearLayout>-->
+    </RelativeLayout>
 
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="45sp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:orientation="horizontal">-->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="10sp"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="100sp"
+            android:background="@drawable/back_shape"
+            android:orientation="vertical">
 
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Company Name : "-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:textStyle="bold"-->
-                    <!--android:typeface="sans" />-->
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_single_user_list"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="2sp"
+                android:layout_marginRight="2sp"
+                android:layout_marginTop="2sp"
+                android:background="@drawable/back_shape">
 
-                <!--<TextView-->
-                    <!--android:id="@+id/customer_tv_company_name"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="company name"-->
-                    <!--android:textSize="16sp" />-->
+            </android.support.v7.widget.RecyclerView>
+
+        </RelativeLayout>
+
+    </FrameLayout>
 
 
-            <!--</LinearLayout>-->
 
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="45sp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="5sp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Phone : "-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:typeface="sans"-->
-                    <!--android:textSize="16sp"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/customer_tv_phone_no"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="phone"-->
-                    <!--android:textSize="16sp" />-->
-
-
-            <!--</LinearLayout>-->
-
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="45sp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="5sp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Address : "-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:typeface="sans"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/customer_tv_address"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="address" />-->
-
-
-            <!--</LinearLayout>-->
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="45sp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="5sp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Date : "-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:typeface="sans"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/customer_tv_date"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Date" />-->
-
-
-            <!--</LinearLayout>-->
-
-
-            <!--<LinearLayout-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="45sp"-->
-                <!--android:layout_gravity="center"-->
-                <!--android:layout_marginTop="5sp"-->
-                <!--android:orientation="horizontal">-->
-
-                <!--<TextView-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="Unit : "-->
-                    <!--android:textColor="@color/black"-->
-                    <!--android:typeface="sans"-->
-                    <!--android:textStyle="bold" />-->
-
-                <!--<TextView-->
-                    <!--android:id="@+id/customer_tv_unit"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_gravity="center"-->
-                    <!--android:layout_marginLeft="10sp"-->
-                    <!--android:text="unit" />-->
-
-
-            <!--</LinearLayout>-->
-        <!--</LinearLayout>-->
-
-
-    <!--</android.support.v7.widget.CardView>-->
 
 </LinearLayout>

@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.Date;
 public class NotificationServices extends Service {
     AppointCrud appointCrud;
-    public static boolean check = false;
+    public static boolean checkNofication = true;
 
     public NotificationServices() {
     }
@@ -32,7 +32,7 @@ public class NotificationServices extends Service {
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
 
-        Toast.makeText(this, "services started", Toast.LENGTH_SHORT).show();
+    //    Toast.makeText(this, "services started", Toast.LENGTH_SHORT).show();
         appointCrud = new AppointCrud(getApplicationContext());
 
         final Handler handler = new Handler();
@@ -46,16 +46,20 @@ public class NotificationServices extends Service {
                 SimpleDateFormat df = new SimpleDateFormat("HH-mm");
                 String currentTime = df.format(new Date());
 
-                if(!check){
                     if (appointCrud.checkItemChart(formattedDate)) {
+                        Log.d("match","matching");
 
-                        Toast.makeText(NotificationServices.this, "matched", Toast.LENGTH_SHORT).show();
-                        AlertUtils.createNotification(getApplicationContext(), "appointment", "check your today appointment", 9);
+                        if(currentTime.equals("11-59")){
+                            AlertUtils.createNotification(getApplicationContext(), "appointment", "check your today appointment", 9);
+                        }
+                        else {
+                            Log.d("zma","this is not the time");
+                        }
+
 
                     }
-                }
 
-                handler.postDelayed(this, 5000);
+                handler.postDelayed(this, 50000);
             }
 
         };

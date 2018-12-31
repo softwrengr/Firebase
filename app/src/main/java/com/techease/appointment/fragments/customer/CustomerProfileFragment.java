@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -31,6 +32,8 @@ public class CustomerProfileFragment extends Fragment {
     TextView tvProfilePhone;
     @BindView(R.id.tv_profile_email)
     TextView tvProfileEmail;
+    @BindView(R.id.iv_customer_back_two)
+    ImageView ivBack;
     View view;
     private DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
@@ -52,10 +55,17 @@ public class CustomerProfileFragment extends Fragment {
         ButterKnife.bind(this, view);
         firebaseDatabase = FirebaseDatabase.getInstance();
         showProfileInfo();
+
+        ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
+            }
+        });
     }
 
     private void showProfileInfo() {
-        databaseReference = firebaseDatabase.getReference("Profile").child(strCustomerName);
+        databaseReference = firebaseDatabase.getReference("Profile").child("Customer_profile").child(strCustomerName);
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {

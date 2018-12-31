@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
 
+import com.techease.appointment.actvities.MainActivity;
 import com.techease.appointment.fragments.customer.ShowCalendarFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 
@@ -43,7 +44,7 @@ public class ShowRetailersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view =  inflater.inflate(R.layout.fragment_show_retailers, container, false);
-        getActivity().setTitle("All Retailers");
+        ((MainActivity)getActivity()).getSupportActionBar().hide();
         initUI();
         return view;
     }
@@ -88,15 +89,16 @@ public class ShowRetailersFragment extends Fragment {
         ValueEventListener eventListener = new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
+                if (!dataSnapshot.exists()) {
+                    Toast.makeText(getActivity(), "No Retailer available", Toast.LENGTH_SHORT).show();
+                } else {
+                    String name = dataSnapshot.child("Abdullah").getKey();
+                    String phone = dataSnapshot.child("Adam").getKey();
+                    String email = dataSnapshot.child("Danyal").getKey();
 
-                List<String> arrayList = new ArrayList<String>();
-                for(DataSnapshot ds : dataSnapshot.getChildren()) {
-//                 arrayList.add(ds.getKey().toString());
-//                    Iterator<String> iterator = arrayList.iterator();
-//                    while (iterator.hasNext()) {
-//                        tvRetailerOne.setText(iterator.next());
-//                    }
-                    String[] array = new String[]{ds.getKey()};
+                    tvRetailerOne.setText(name);
+                    tvRetailerTwo.setText(phone);
+                    tvRetailerThree.setText(email);
                 }
 
             }

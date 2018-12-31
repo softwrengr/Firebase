@@ -2,7 +2,7 @@
 <resources>
     <color name="colorPrimary">#F37335</color>
     <color name="colorPrimaryDark">#fc4a1a</color>
-    <color name="colorAccent">#ffe6ff</color>
+    <color name="colorAccent">#f89e76</color>
 
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
@@ -11,6 +11,7 @@
     <color name="bgBottomNavigation">#fe485a</color>
 
 
-    <color name="end">#FDC830</color>
-    <color name="start">#F37335</color>
+    <color name="start">#f6916d</color>
+    <color name="center">#f58559</color>
+    <color name="end">#f3733d</color>
 </resources>

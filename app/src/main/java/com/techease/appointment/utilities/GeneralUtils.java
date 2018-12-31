@@ -51,8 +51,8 @@ public class GeneralUtils {
         return getSharedPreferences(context).getString("type","");
     }
 
-    public static String getDate(Context context) {
-        return getSharedPreferences(context).getString("child_date","");
+    public static String getRetailerName(Context context) {
+        return getSharedPreferences(context).getString("retailer_name","");
     }
 
     public static String singleDate(Context context) {
@@ -66,4 +66,5 @@ public class GeneralUtils {
     public static String getName(Context context){
         return getSharedPreferences(context).getString("name","");
     }
+
 }

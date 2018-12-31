@@ -7,6 +7,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.techease.appointment.R;
 import com.techease.appointment.utilities.AlertUtils;
+import com.techease.appointment.utilities.GeneralUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,11 +43,14 @@ public class SetCalendarFragment extends Fragment {
     @BindView(R.id.btnSaveDate)
     Button btnSave;
     View view;
+    private boolean valid = false;
 
-    String startDate,endDate;
+    String startDate, endDate;
     FirebaseDatabase firebaseDatabase;
     FirebaseAuth auth;
     private DatabaseReference mDatabase;
+    private String strRetailerName;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -56,15 +61,13 @@ public class SetCalendarFragment extends Fragment {
         return view;
     }
 
-    private void initUI(){
-        ButterKnife.bind(this,view);
+    private void initUI() {
+        ButterKnife.bind(this, view);
         setDate();
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                alertDialog = AlertUtils.createProgressDialog(getActivity());
-                alertDialog.show();
                 saveWeekDays();
             }
         });
@@ -93,7 +96,6 @@ public class SetCalendarFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(sDate.getTime());
         startDate = formatted;
-        Toast.makeText(getActivity(), startDate, Toast.LENGTH_SHORT).show();
         try {
             System.out.println(format1.parse(formatted));
         } catch (ParseException e) {
@@ -107,7 +109,6 @@ public class SetCalendarFragment extends Fragment {
         SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
         String formatted = format1.format(eDate.getTime());
         endDate = formatted;
-        Toast.makeText(getActivity(), endDate, Toast.LENGTH_SHORT).show();
         try {
             System.out.println(format1.parse(formatted));
         } catch (ParseException e) {
@@ -116,21 +117,29 @@ public class SetCalendarFragment extends Fragment {
 
     }
 
-    private void saveWeekDays(){
-        mDatabase = FirebaseDatabase.getInstance().getReference().child("available days").child("abdullah");
+    private void saveWeekDays() {
 
-        Map<String,String> map = new HashMap<>();
-        map.put("from",startDate);
-        map.put("to",endDate);
-        mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-            @Override
-            public void onComplete(@NonNull Task<Void> task) {
-                if(task.isSuccessful()){
-                    alertDialog.dismiss();
-                    Toast.makeText(getActivity(), "successfully make appointment", Toast.LENGTH_SHORT).show();
+        if (startDate == null || startDate.equals("")) {
+            Toast.makeText(getActivity(), "start date missing", Toast.LENGTH_SHORT).show();
+        } else if (endDate == null || endDate.equals("")) {
+            Toast.makeText(getActivity(), "end date missing", Toast.LENGTH_SHORT).show();
+        } else {
+            alertDialog = AlertUtils.createProgressDialog(getActivity());
+            alertDialog.show();
+            mDatabase = FirebaseDatabase.getInstance().getReference().child("available days").child(GeneralUtils.getRetailerName(getActivity()));
+            Map<String, String> map = new HashMap<>();
+            map.put("from", startDate);
+            map.put("to", endDate);
+            mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if (task.isSuccessful()) {
+                        alertDialog.dismiss();
+                        Toast.makeText(getActivity(), "successfully set Calendar", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 
     public void customActionBar() {

@@ -64,7 +64,6 @@ public class AlertUtils {
         /**Creates an explicit intent for an Activity in your app**/
         Intent resultIntent = new Intent(context, MainActivity.class);
         resultIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        NotificationServices.check=true;
 
         Uri soundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 

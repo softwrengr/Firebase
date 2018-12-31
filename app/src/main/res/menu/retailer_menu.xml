@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    >
+
+    <item
+        android:id="@+id/retailer_one"
+        android:title="Abdullah"/>
+
+
+    <item
+        android:id="@+id/retailer_two"
+        android:title="Adam"/>
+    <item
+        android:id="@+id/retailer_three"
+        android:title="Danyal"/>
+
+
+</menu>
