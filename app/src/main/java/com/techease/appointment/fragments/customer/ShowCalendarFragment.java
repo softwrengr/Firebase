@@ -76,9 +76,7 @@ public class ShowCalendarFragment extends Fragment {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_show_calendar, container, false);
         customActionBar();
-        strCustomerName = GeneralUtils.getEmail(getActivity());
-        String[] splitStr = strCustomerName.split("@");
-        strCustomerName = splitStr[0];
+        strCustomerName = GeneralUtils.getName(getActivity());
         initUI();
 
 
@@ -134,15 +132,20 @@ public class ShowCalendarFragment extends Fragment {
 
         final Calendar nextYear = Calendar.getInstance();
         nextYear.add(Calendar.YEAR, 1);
-
         final Calendar lastYear = Calendar.getInstance();
         lastYear.add(Calendar.YEAR, -1);
+
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+
+        calendar.deactivateDates(list);
 
 
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
 
         calendar.init(lastYear.getTime(), nextYear.getTime(), simpleDateFormat)
                 .withSelectedDate(new Date())
+                .withDeactivateDates(list)
                 .withHighlightedDates(arrayList);
 
 
@@ -208,7 +211,7 @@ public class ShowCalendarFragment extends Fragment {
     }
 
     private void getDates() {
-        databaseReference = firebaseDatabase.getReference("single_user_data").child(strCustomerName);
+        databaseReference = firebaseDatabase.getReference("appointment").child(strCustomerName);
         databaseReference.addListenerForSingleValueEvent(
                 new ValueEventListener() {
                     @Override

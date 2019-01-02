@@ -135,7 +135,7 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity(), "your email or password is incorrect", Toast.LENGTH_SHORT).show();
                 } else {
                     alertDialog.dismiss();
-                    GeneralUtils.putStringValueInEditor(getActivity(), "retailer_name", strName);
+                   // GeneralUtils.putStringValueInEditor(getActivity(), "retailer_name", strName);
                     GeneralUtils.connectFragment(getActivity(), new RetailerHomeFragment());
                 }
             }

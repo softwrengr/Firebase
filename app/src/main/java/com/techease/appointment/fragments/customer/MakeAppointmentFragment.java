@@ -64,6 +64,7 @@ public class MakeAppointmentFragment extends Fragment {
     private DatabaseReference mDatabase,databaseReference;
     FirebaseDatabase firebaseDatabase;
     private String strFirstName, strLastName,strEmail, strChildNode,strCompanyName,strAddress,strPhone,strDate,strUnit="";
+    private String strRetailerName;
     private boolean valid = false;
 
     @Override
@@ -74,6 +75,8 @@ public class MakeAppointmentFragment extends Fragment {
         customActionBar();
         getActivity().setTitle("Book your appointment");
         strEmail = GeneralUtils.getEmail(getActivity());
+        strRetailerName = GeneralUtils.getName(getActivity());
+
         String[] splitStr = strEmail.split("@");
         strChildNode = splitStr[0];
 
@@ -101,8 +104,8 @@ public class MakeAppointmentFragment extends Fragment {
             public void onClick(View v) {
                 if(validate()){
 
-                    databaseReference = FirebaseDatabase.getInstance().getReference("users");
-                    mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_data").child(strChildNode);
+                    databaseReference = FirebaseDatabase.getInstance().getReference("appointment").child(strRetailerName);
+                    mDatabase = FirebaseDatabase.getInstance().getReference().child("single_user_appointment").child(strChildNode);
                     Users users = new Users(strAddress,strCompanyName,strDate,strFirstName,strLastName,strPhone,strUnit);
 
                     databaseReference.push().setValue(users).addOnSuccessListener(new OnSuccessListener<Void>() {

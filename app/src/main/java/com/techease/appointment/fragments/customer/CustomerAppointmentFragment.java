@@ -87,7 +87,7 @@ public class CustomerAppointmentFragment extends Fragment {
 
 
     private void showCustomerData() {
-        databaseReference = firebaseDatabase.getReference("single_user_data").child(strChildNode);
+        databaseReference = firebaseDatabase.getReference("single_user_appointment").child(strChildNode);
 
         rvUserList.setHasFixedSize(true);
         rvUserList.setLayoutManager(new LinearLayoutManager(getActivity()));
