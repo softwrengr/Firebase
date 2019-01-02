@@ -36,12 +36,21 @@ public class GeneralUtils {
         return fragment;
     }
 
+    public static SharedPreferences.Editor putBooleanValueInEditor(Context context, String key, boolean value) {
+        sharedPreferences = getSharedPreferences(context);
+        editor = sharedPreferences.edit();
+        editor.putBoolean(key, value).commit();
+        return editor;
+    }
+
     public static SharedPreferences.Editor putStringValueInEditor(Context context, String key, String value) {
         sharedPreferences = getSharedPreferences(context);
         editor = sharedPreferences.edit();
         editor.putString(key, value).commit();
         return editor;
     }
+
+
 
     public static SharedPreferences getSharedPreferences(Context context) {
         return context.getSharedPreferences("appoint", 0);
@@ -55,16 +64,25 @@ public class GeneralUtils {
         return getSharedPreferences(context).getString("retailer_name","");
     }
 
-    public static String singleDate(Context context) {
-        return getSharedPreferences(context).getString("single_date","");
-    }
-
     public static String getEmail(Context context){
         return getSharedPreferences(context).getString("email","");
     }
 
     public static String getName(Context context){
         return getSharedPreferences(context).getString("name","");
+    }
+
+    public static String checkAppointment(Context context){
+        return getSharedPreferences(context).getString("check_appointment","");
+    }
+
+
+    public static boolean customerLogin(Context context){
+        return getSharedPreferences(context).getBoolean("customer_loggedIn",false);
+    }
+
+    public static boolean reatailerLogin(Context context){
+        return getSharedPreferences(context).getBoolean("retailer_loggedIn",false);
     }
 
 }

@@ -1,12 +1,10 @@
-package com.techease.appointment.fragments.customer;
+package com.techease.appointment.fragments.retailers;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,48 +17,37 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
-import com.techease.appointment.fragments.retailers.RetailerHomeFragment;
-import com.techease.appointment.fragments.retailers.SetCalendarFragment;
+import com.techease.appointment.fragments.customer.CustomerHomeFragment;
+import com.techease.appointment.fragments.customer.ShowCalendarFragment;
 import com.techease.appointment.models.Users;
 import com.techease.appointment.utilities.GeneralUtils;
-
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
-public class MakeAppointmentFragment extends Fragment {
+public class MakeScheduleFragment extends Fragment {
     View view;
-    @BindView(R.id.et_first_name)
+    @BindView(R.id.et_ret_first_name)
     EditText etFirstName;
-    @BindView(R.id.et_last_name)
+    @BindView(R.id.et_ret_last_name)
     EditText etLastName;
-    @BindView(R.id.et_company)
+    @BindView(R.id.et_ret_company)
     EditText etCompanyName;
-    @BindView(R.id.phone)
+    @BindView(R.id.ret_phone)
     EditText etPhone;
-    @BindView(R.id.address)
+    @BindView(R.id.ret_address)
     EditText etAddress;
-    @BindView(R.id.date)
+    @BindView(R.id.ret_date)
     EditText etDate;
-    @BindView(R.id.tv_select_unit)
+    @BindView(R.id.tv_ret_select_unit)
     TextView tvSelectUnit;
-    @BindView(R.id.btn_make_appointment)
+    @BindView(R.id.ret_btn_make_appointment)
     Button btnConfirmAppointment;
-    @BindView(R.id.layout_select_unit)
+    @BindView(R.id.ret_layout_select_unit)
     LinearLayout layoutSelectUnit;
 
     private DatabaseReference mDatabase,databaseReference;
@@ -68,17 +55,15 @@ public class MakeAppointmentFragment extends Fragment {
     private String strFirstName, strLastName,strEmail, strChildNode,strCompanyName,strAddress,strPhone,strDate,strUnit="";
     private String strRetailerName;
     private boolean valid = false;
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        view =  inflater.inflate(R.layout.fragment_make_appointment, container, false);
+        view = inflater.inflate(R.layout.fragment_make_schedule, container, false);
         customActionBar();
         getActivity().setTitle("Book your appointment");
+        strRetailerName = GeneralUtils.getRetailerName(getActivity());
         strEmail = GeneralUtils.getEmail(getActivity());
-        strRetailerName = GeneralUtils.getName(getActivity());
-
         String[] splitStr = strEmail.split("@");
         strChildNode = splitStr[0];
 
@@ -121,7 +106,7 @@ public class MakeAppointmentFragment extends Fragment {
                         @Override
                         public void onSuccess(Void aVoid) {
                             Toast.makeText(getActivity(), "data save", Toast.LENGTH_SHORT).show();
-                            GeneralUtils.connectFragment(getActivity(),new CustomerHomeFragment());
+                            GeneralUtils.connectFragment(getActivity(),new RetailerHomeFragment());
                         }
                     });
 
@@ -220,7 +205,7 @@ public class MakeAppointmentFragment extends Fragment {
         ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GeneralUtils.connectFragment(getActivity(),new ShowCalendarFragment());
+                GeneralUtils.connectFragment(getActivity(),new RetailerHomeFragment());
             }
         });
         mActionBar.setCustomView(mCustomView);

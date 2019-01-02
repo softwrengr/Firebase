@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
 import com.techease.appointment.actvities.MainActivity;
+import com.techease.appointment.fragments.loginSignupFragments.LoginSignupFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import butterknife.BindView;
@@ -29,6 +31,8 @@ public class RetailerProfileFragment extends Fragment {
     TextView tvProfilePhone;
     @BindView(R.id.tv_retailer_profile_email)
     TextView tvProfileEmail;
+    @BindView(R.id.btn_logout)
+    Button btnLogout;
     View view;
     private DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
@@ -50,6 +54,14 @@ public class RetailerProfileFragment extends Fragment {
         ButterKnife.bind(this, view);
         firebaseDatabase = FirebaseDatabase.getInstance();
         showProfileInfo();
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneralUtils.putBooleanValueInEditor(getActivity(), "retailer_loggedIn", false).commit();
+                GeneralUtils.connectFragment(getActivity(),new LoginSignupFragment());
+            }
+        });
     }
 
 

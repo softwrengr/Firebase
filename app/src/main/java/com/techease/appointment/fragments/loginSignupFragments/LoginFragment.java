@@ -63,10 +63,9 @@ public class LoginFragment extends Fragment {
     private void initUI() {
         ButterKnife.bind(this, view);
 
-        if(strUserType.equals("customer")){
-            Log.d("ok","all is okay");
-        }
-        else {
+        if (strUserType.equals("customer")) {
+            Log.d("ok", "all is okay");
+        } else {
             etRetailer.setVisibility(View.VISIBLE);
             etRetailer.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,18 +84,15 @@ public class LoginFragment extends Fragment {
 
                     if (strUserType.equals("customer")) {
                         customerLogin();
-                    }
-                    else {
+                    } else {
                         if (strName.isEmpty()) {
                             Toast.makeText(getActivity(), "please select retailer", Toast.LENGTH_SHORT).show();
                             valid = false;
                         } else {
                             retailerLogin();
-                            GeneralUtils.putStringValueInEditor(getActivity(),"retailer_name",strName);
+                            GeneralUtils.putStringValueInEditor(getActivity(), "retailer_name", strName);
                         }
-
                     }
-
                 }
             }
         });
@@ -119,6 +115,7 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity(), "your email or password is incorrect", Toast.LENGTH_SHORT).show();
                 } else {
                     alertDialog.dismiss();
+                    GeneralUtils.putBooleanValueInEditor(getActivity(), "customer_loggedIn", true).commit();
                     GeneralUtils.connectFragment(getActivity(), new CustomerHomeFragment());
                 }
             }
@@ -135,7 +132,8 @@ public class LoginFragment extends Fragment {
                     Toast.makeText(getActivity(), "your email or password is incorrect", Toast.LENGTH_SHORT).show();
                 } else {
                     alertDialog.dismiss();
-                   // GeneralUtils.putStringValueInEditor(getActivity(), "retailer_name", strName);
+                    GeneralUtils.putStringValueInEditor(getActivity(), "retailer_name", strName);
+                    GeneralUtils.putBooleanValueInEditor(getActivity(), "retailer_loggedIn", true).commit();
                     GeneralUtils.connectFragment(getActivity(), new RetailerHomeFragment());
                 }
             }

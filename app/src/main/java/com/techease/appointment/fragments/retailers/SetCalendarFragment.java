@@ -20,16 +20,25 @@ import com.archit.calendardaterangepicker.customviews.DateRangeCalendarView;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.savvi.rangedatepicker.CalendarPickerView;
 import com.techease.appointment.R;
+import com.techease.appointment.fragments.customer.MakeAppointmentFragment;
+import com.techease.appointment.helpers.AppointCrud;
 import com.techease.appointment.utilities.AlertUtils;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import butterknife.BindView;
@@ -37,19 +46,19 @@ import butterknife.ButterKnife;
 
 
 public class SetCalendarFragment extends Fragment {
-    AlertDialog alertDialog;
-    @BindView(R.id.set_calendar)
-    DateRangeCalendarView dateRangeCalendarView;
+    @BindView(R.id.retailer_calendar_picker)
+    CalendarPickerView calendar;
     @BindView(R.id.btnSaveDate)
-    Button btnSave;
-    View view;
-    private boolean valid = false;
+    Button btnSaveAppointment;
 
-    String startDate, endDate;
+    View view;
     FirebaseDatabase firebaseDatabase;
-    FirebaseAuth auth;
-    private DatabaseReference mDatabase;
-    private String strRetailerName;
+    DatabaseReference databaseReference;
+    private String strRetailName;
+    boolean singleUsercheck = false;
+    String strDate = "";
+    ArrayList<Date> arrayList;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -63,84 +72,135 @@ public class SetCalendarFragment extends Fragment {
 
     private void initUI() {
         ButterKnife.bind(this, view);
-        setDate();
+        strRetailName = GeneralUtils.getRetailerName(getActivity());
+        firebaseDatabase = FirebaseDatabase.getInstance();
+        arrayList = new ArrayList<>();
 
-        btnSave.setOnClickListener(new View.OnClickListener() {
+        showCalendar();
+        getBookedDates();
+
+        btnSaveAppointment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                saveWeekDays();
-            }
-        });
-    }
 
-    private void setDate() {
-        dateRangeCalendarView.setCalendarListener(new DateRangeCalendarView.CalendarListener() {
-            @Override
-            public void onFirstDateSelected(Calendar startDate) {
-                convertStartDateToString(startDate);
-            }
-
-            @Override
-            public void onDateRangeSelected(Calendar startDate, Calendar endDate) {
-
-                convertEndDateToString(endDate);
-
-            }
-        });
-
-    }
-
-    private void convertStartDateToString(Calendar sDate) {
-
-        sDate.add(Calendar.DATE, 0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        String formatted = format1.format(sDate.getTime());
-        startDate = formatted;
-        try {
-            System.out.println(format1.parse(formatted));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void convertEndDateToString(Calendar eDate) {
-        eDate.add(Calendar.DATE, 0);
-        SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-        String formatted = format1.format(eDate.getTime());
-        endDate = formatted;
-        try {
-            System.out.println(format1.parse(formatted));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-
-    }
-
-    private void saveWeekDays() {
-
-        if (startDate == null || startDate.equals("")) {
-            Toast.makeText(getActivity(), "start date missing", Toast.LENGTH_SHORT).show();
-        } else if (endDate == null || endDate.equals("")) {
-            Toast.makeText(getActivity(), "end date missing", Toast.LENGTH_SHORT).show();
-        } else {
-            alertDialog = AlertUtils.createProgressDialog(getActivity());
-            alertDialog.show();
-            mDatabase = FirebaseDatabase.getInstance().getReference().child("available days").child(GeneralUtils.getRetailerName(getActivity()));
-            Map<String, String> map = new HashMap<>();
-            map.put("from", startDate);
-            map.put("to", endDate);
-            mDatabase.setValue(map).addOnCompleteListener(new OnCompleteListener<Void>() {
-                @Override
-                public void onComplete(@NonNull Task<Void> task) {
-                    if (task.isSuccessful()) {
-                        alertDialog.dismiss();
-                        Toast.makeText(getActivity(), "successfully set Calendar", Toast.LENGTH_SHORT).show();
-                    }
+                if (strDate.equals("") || strDate.isEmpty()) {
+                    Toast.makeText(getActivity(), "please select booking date", Toast.LENGTH_SHORT).show();
+                } else {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("selected_date", strDate);
+                    GeneralUtils.connectFragmentWithBack(getActivity(), new MakeScheduleFragment()).setArguments(bundle);
                 }
-            });
+            }
+        });
+    }
+
+
+    private void showCalendar() {
+
+        final Calendar nextYear = Calendar.getInstance();
+        nextYear.add(Calendar.YEAR, 1);
+        final Calendar lastYear = Calendar.getInstance();
+        lastYear.add(Calendar.YEAR, -1);
+
+        ArrayList<Integer> list = new ArrayList<>();
+        list.add(1);
+
+        calendar.deactivateDates(list);
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MMMM, yyyy", Locale.getDefault());
+
+        calendar.init(lastYear.getTime(), nextYear.getTime(), simpleDateFormat)
+                .withSelectedDate(new Date())
+                .withDeactivateDates(list)
+                .withHighlightedDates(arrayList);
+
+
+        calendar.setOnDateSelectedListener(new CalendarPickerView.OnDateSelectedListener() {
+            @Override
+            public void onDateSelected(Date date) {
+                formatedDate(date);
+            }
+
+            @Override
+            public void onDateUnselected(Date date) {
+
+            }
+        });
+
+    }
+
+    private void formatedDate(Date date) {
+        SimpleDateFormat spf = new SimpleDateFormat("EEE MMM dd HH:mm:ss zzz yyyy");
+        strDate = spf.format(date);
+        if (date == null) {
+            Toast.makeText(getActivity(), "no date selected", Toast.LENGTH_SHORT).show();
+        } else {
+
+            java.util.Date newDate = null;
+            try {
+                newDate = spf.parse(strDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            strDate = sdf.format(newDate);
+
         }
     }
+
+    private void getBookedDates() {
+        databaseReference = firebaseDatabase.getReference("appointment").child(strRetailName);
+        databaseReference.addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+
+                        if (!dataSnapshot.exists()) {
+                            Toast.makeText(getActivity(), "No appointment is booked currently", Toast.LENGTH_SHORT).show();
+                        } else {
+                            collectPhoneNumbers((Map<String, Object>) dataSnapshot.getValue());
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        Log.d("error", databaseError.getMessage());
+                    }
+                });
+
+    }
+
+    private void collectPhoneNumbers(Map<String, Object> users) {
+
+        ArrayList<String> phoneNumbers = new ArrayList<>();
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : users.entrySet()) {
+
+            //Get user map
+            Map singleUser = (Map) entry.getValue();
+            //Get phone field and append to list
+            phoneNumbers.add((String) singleUser.get("date"));
+        }
+
+
+        try {
+
+            SimpleDateFormat dateformat = new SimpleDateFormat("yyyy-MM-dd");
+
+            for (int i = 0; i < phoneNumbers.size(); i++) {
+                Date newdate = dateformat.parse(phoneNumbers.get(i));
+                arrayList.add(newdate);
+            }
+
+            showCalendar();
+
+
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     public void customActionBar() {
         android.support.v7.app.ActionBar mActionBar = ((AppCompatActivity) getActivity()).getSupportActionBar();

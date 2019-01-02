@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -19,6 +20,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.techease.appointment.R;
+import com.techease.appointment.fragments.loginSignupFragments.LoginSignupFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 
 import butterknife.BindView;
@@ -34,6 +36,8 @@ public class CustomerProfileFragment extends Fragment {
     TextView tvProfileEmail;
     @BindView(R.id.iv_customer_back_two)
     ImageView ivBack;
+    @BindView(R.id.btnLogout)
+    Button btnLogout;
     View view;
     private DatabaseReference databaseReference;
     FirebaseDatabase firebaseDatabase;
@@ -60,6 +64,14 @@ public class CustomerProfileFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 GeneralUtils.connectCustomerFragment(getActivity(),new ShowRetailersFragment());
+            }
+        });
+
+        btnLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                GeneralUtils.putBooleanValueInEditor(getActivity(), "customer_loggedIn", false).commit();
+                GeneralUtils.connectFragment(getActivity(),new LoginSignupFragment());
             }
         });
     }

@@ -1,0 +1,167 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/gradient_background"
+    tools:context="com.techease.appointment.fragments.retailers.MakeScheduleFragment">
+
+
+
+    <EditText
+        android:id="@+id/et_ret_first_name"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginLeft="20sp"
+        android:hint="First Name"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:imeOptions="actionNext"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="14sp"
+        android:layout_marginRight="20sp"
+        />
+
+
+    <EditText
+        android:id="@+id/et_ret_last_name"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginLeft="20sp"
+        android:hint="Last name"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:imeOptions="actionNext"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="14sp"
+        android:layout_marginRight="20sp"
+        />
+
+
+    <EditText
+        android:id="@+id/et_ret_company"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginLeft="20sp"
+        android:hint="Company Name(optional)"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:imeOptions="actionNext"
+        android:textSize="14sp"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_marginRight="20sp"
+        />
+
+    <EditText
+        android:id="@+id/ret_phone"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginLeft="20sp"
+        android:hint="Phone number"
+        android:inputType="number"
+        android:textColor="@color/white"
+        android:imeOptions="actionNext"
+        android:textSize="14sp"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_marginRight="20sp"
+        />
+
+    <EditText
+        android:id="@+id/ret_address"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginLeft="20sp"
+        android:hint="Address"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:imeOptions="actionNext"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        android:textSize="14sp"
+        android:layout_marginRight="20sp"
+        />
+
+
+    <EditText
+        android:id="@+id/ret_date"
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginLeft="20sp"
+        android:hint="Date"
+        android:textSize="14sp"
+        android:inputType="textEmailAddress"
+        android:textColor="@color/white"
+        android:imeOptions="actionNext"
+        android:enabled="false"
+        android:clickable="false"
+        android:backgroundTint="@color/white"
+        android:textColorHint="@color/white"
+        android:layout_marginRight="20sp"
+        />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60sp"
+        android:layout_marginRight="20sp"
+        android:layout_marginLeft="20sp"
+        android:layout_marginTop="10sp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textSize="19sp"
+            android:textColor="@color/white"
+            android:layout_marginLeft="5sp"
+            android:textStyle="bold"
+            android:text="Unit :"/>
+
+        <LinearLayout
+            android:id="@+id/ret_layout_select_unit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_ret_select_unit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:textSize="16sp"
+                android:padding="5sp"
+                android:textColor="@color/white"
+                android:layout_marginLeft="5sp"
+                android:text="select"/>
+
+            <ImageView
+                android:layout_width="20sp"
+                android:layout_height="20sp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="5sp"
+                android:src="@drawable/down_arrow"/>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/ret_btn_make_appointment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginLeft="30sp"
+        android:layout_marginRight="30sp"
+        android:layout_marginTop="20sp"
+        android:background="@color/colorAccent"
+        android:gravity="center"
+        android:text="Confirm Appointment"
+        android:textColor="@color/white" />
+
+</LinearLayout>

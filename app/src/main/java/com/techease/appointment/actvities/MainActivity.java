@@ -11,7 +11,9 @@ import com.karumi.dexter.PermissionToken;
 import com.karumi.dexter.listener.PermissionRequest;
 import com.karumi.dexter.listener.multi.MultiplePermissionsListener;
 import com.techease.appointment.R;
+import com.techease.appointment.fragments.customer.CustomerHomeFragment;
 import com.techease.appointment.fragments.loginSignupFragments.LoginSignupFragment;
+import com.techease.appointment.fragments.retailers.RetailerHomeFragment;
 import com.techease.appointment.utilities.GeneralUtils;
 import com.techease.appointment.services.NotificationServices;
 
@@ -37,6 +39,14 @@ public class MainActivity extends AppCompatActivity {
 
         startService(new Intent(MainActivity.this, NotificationServices.class));
 
-        GeneralUtils.connectFragment(this,new LoginSignupFragment());
+        if(GeneralUtils.customerLogin(MainActivity.this)){
+            GeneralUtils.connectFragment(MainActivity.this, new CustomerHomeFragment());
+        }
+        else if(GeneralUtils.reatailerLogin(MainActivity.this)){
+            GeneralUtils.connectFragment(MainActivity.this, new RetailerHomeFragment());
+        }
+        else {
+            GeneralUtils.connectFragment(this,new LoginSignupFragment());
+        }
     }
 }

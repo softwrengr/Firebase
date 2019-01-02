@@ -6,16 +6,27 @@
     tools:context="com.techease.appointment.fragments.retailers.SetCalendarFragment">
 
 
-    <com.archit.calendardaterangepicker.customviews.DateRangeCalendarView
-        android:id="@+id/set_calendar"
-        android:layout_width="wrap_content"
+
+<LinearLayout
+    android:id="@+id/cal_layout"
+    android:layout_width="match_parent"
+    android:layout_height="380sp"
+    android:orientation="vertical">
+    <com.savvi.rangedatepicker.CalendarPickerView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/retailer_calendar_picker"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        custom:disable_date_color="#ABABAB"
-        custom:header_bg="@color/colorPrimary"
-        custom:range_color="@color/colorPrimary"
-        custom:selected_date_circle_color="@color/selected_date_circle_color"
-        custom:title_color="@color/white">
-    </com.archit.calendardaterangepicker.customviews.DateRangeCalendarView>
+        android:paddingLeft="16dp"
+        android:paddingRight="16dp"
+        android:paddingBottom="16dp"
+        android:scrollbarStyle="outsideOverlay"
+        android:clipToPadding="false"
+        app:tsquare_dividerColor="@color/colorPrimaryDark"
+        app:tsquare_headerTextColor="@color/colorAccent"
+        />
+</LinearLayout>
 
 
 
@@ -23,10 +34,10 @@
         android:id="@+id/btnSaveDate"
         android:layout_width="200sp"
         android:layout_height="40sp"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="25sp"
         android:background="@drawable/gradient_background"
-        android:text="Set your Schedule"
-        android:layout_below="@id/set_calendar"
+        android:text="Set schedule with your customer"
+        android:layout_below="@id/cal_layout"
         android:textAllCaps="false"
         android:layout_centerInParent="true"
         android:textColor="@color/white"
